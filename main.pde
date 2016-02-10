@@ -1,0 +1,64 @@
+import controlP5.*;
+
+BasketballCourt b;
+ArrayList<GameEvent> events;
+int currentEvent = 0;
+
+ControlP5 slider;
+
+void setup() {
+  frameRate(80);
+  size(800, 600, P2D);
+  b = new BasketballCourt(700, 400);
+  loadEvents("data/games/0041400101/16.csv");
+}
+
+void draw() {
+  background(100);
+  b.draw();
+  
+  // Draw players
+  GameEvent ge = events.get(currentEvent);
+  ArrayList<PlayerPosition[]> teams = ge.getTeams();
+  b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
+  currentEvent = (currentEvent+1)%events.size();
+}
+  
+void loadEvents(String fileName) {
+  String lines[] = loadStrings(fileName);
+  events = new ArrayList<GameEvent>(lines.length/10);
+  PlayerPosition[] players = new PlayerPosition[10];
+  int p = 0;
+    
+  int moment = -1;
+  float gameClock = -1;
+  float shotClock = -1;
+  int period = -1;
+  float[] ball = new float[]{0, 0, 0};
+  
+  for(int i = 0; i < lines.length; i++) {
+    String[] fields = lines[i].split(",");
+    int curMom = Integer.parseInt(fields[6]);
+    
+    if(curMom != moment) { // New event
+      if(moment != -1)
+        events.add(new GameEvent(moment, gameClock, shotClock,
+                    period, ball, new PlayerPosition[]{players[0], players[1], players[2], players[3], players[4]},
+                  new PlayerPosition[]{players[5], players[6], players[7], players[8], players[9]}));
+      moment = curMom;
+      p = 0;
+      gameClock = Float.parseFloat(fields[7]);
+      shotClock = Float.parseFloat(fields[8]);
+      period = Integer.parseInt(fields[9]);
+      ball[0] = Float.parseFloat(fields[3]);
+      ball[1] = Float.parseFloat(fields[4]);
+      ball[2] = Float.parseFloat(fields[5]);
+      
+    } else { // Same event
+      int pId = Integer.parseInt(fields[2]);
+      players[p] = new PlayerPosition(new Player(pId, "", "", 0, ""),
+            Float.parseFloat(fields[3]), Float.parseFloat(fields[4]));
+      p++;
+    }
+  }
+}
