@@ -2,34 +2,34 @@ import controlP5.*;
 
 BasketballCourt b;
 ArrayList<GameEvent> events;
-int currentEvent = 0;
+float currentEvent = 0;
 
 ControlP5 control;
 Button play;
 Slider timeFrame;
 
 void setup() {
-  frameRate(80);
+  frameRate(120);
   size(800, 600, P2D);
   b = new BasketballCourt(700, 400);
   loadEvents("data/games/0041400101/16.csv");
   
   control = new ControlP5(this);
-  timeFrame = control.addSlider("slider")
+  timeFrame = control.addSlider("events")
         .setPosition(100, 20)
         .setSize(200,25)
         .setValue(0)
-        .setRange(0, events.size() - 1)
-        .setNumberOfTickMarks(events.size() - 2)
-        .setSliderMode(Slider.FLEXIBLE);
+        .setRange(0, events.size() - 1);
   play = control.addButton("Play/Pause", "", "playback")
      .setValue(0)
      .setPosition(20, 20)
      .setSize(70, 25);
 }
 
-void slider(float value) {
-  
+void controlEvent(ControlEvent theEvent) {  
+  if(theEvent.isFrom(control.getController("events"))) {
+    currentEvent = control.getController("events").getValue();
+  }
 }
 
 void draw() {
@@ -37,14 +37,13 @@ void draw() {
   control.draw();
   b.draw();
   
-  GameEvent ge = events.get(currentEvent);
+  GameEvent ge = events.get((int)currentEvent);
   ArrayList<PlayerPosition[]> teams = ge.getTeams();
   b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
   
   // Draw players
   if(play.isOn()) {
-    currentEvent = (currentEvent+1)%events.size();
-    timeFrame.setValue(currentEvent);
+    timeFrame.setValue((currentEvent+1)%events.size());
   }
 }
   
