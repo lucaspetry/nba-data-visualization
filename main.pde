@@ -29,7 +29,7 @@ void setup() {
 }
 
 void slider(float value) {
-  println(value);
+  
 }
 
 void draw() {
