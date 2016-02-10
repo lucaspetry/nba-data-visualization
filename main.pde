@@ -4,24 +4,48 @@ BasketballCourt b;
 ArrayList<GameEvent> events;
 int currentEvent = 0;
 
-ControlP5 slider;
+ControlP5 control;
+Button play;
+Slider timeFrame;
 
 void setup() {
   frameRate(80);
   size(800, 600, P2D);
   b = new BasketballCourt(700, 400);
   loadEvents("data/games/0041400101/16.csv");
+  
+  control = new ControlP5(this);
+  timeFrame = control.addSlider("slider")
+        .setPosition(100, 20)
+        .setSize(200,25)
+        .setValue(0)
+        .setRange(0, events.size() - 1)
+        .setNumberOfTickMarks(events.size() - 2)
+        .setSliderMode(Slider.FLEXIBLE);
+  play = control.addButton("Play/Pause", "", "playback")
+     .setValue(0)
+     .setPosition(20, 20)
+     .setSize(70, 25);
+}
+
+void slider(float value) {
+  println(value);
 }
 
 void draw() {
   background(100);
+  control.draw();
   b.draw();
   
-  // Draw players
   GameEvent ge = events.get(currentEvent);
   ArrayList<PlayerPosition[]> teams = ge.getTeams();
   b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
-  currentEvent = (currentEvent+1)%events.size();
+  
+  // Draw players
+  if(play.isOn()) {
+    currentEvent = (currentEvent+1)%events.size();
+    timeFrame.setValue(currentEvent);
+  }
 }
   
 void loadEvents(String fileName) {
