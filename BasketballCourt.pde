@@ -5,6 +5,7 @@ public class BasketballCourt implements Drawable {
   private final static float camHeight = 25.45932;
   private final static float offX = 50;
   private final static float offY = 150;
+  private final static int numPartsCircle = 100;
   
   private float ratio;
   private float courtLength;
@@ -92,13 +93,12 @@ public class BasketballCourt implements Drawable {
     
     line (courtLength/2, 0, courtLength/2, courtWidth); // Division line
     
-    int numParts = 100;
-    float theta = TWO_PI / numParts;
+    float theta = TWO_PI / numPartsCircle;
     
     beginShape(); // Centre outter circle
     texture(this.floorTexture2);
     textureWrap(REPEAT);
-    for (int i=0; i<numParts; i++) {
+    for (int i=0; i<numPartsCircle; i++) {
       float angle = theta * i;
       float x = cos(angle);
       float y = sin(angle);
@@ -111,7 +111,7 @@ public class BasketballCourt implements Drawable {
     beginShape(); // Centre inner circle
     texture(this.floorTexture3);
     textureWrap(REPEAT);
-    for (int i=0; i<numParts; i++) {
+    for (int i=0; i<numPartsCircle; i++) {
       float angle = theta * i;
       float x = cos(angle);
       float y = sin(angle);
