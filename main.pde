@@ -9,9 +9,10 @@ Button play;
 Slider timeFrame;
 
 void setup() {
-  frameRate(120);
+  frameRate(40);
   size(800, 600, P2D);
   b = new BasketballCourt(700, 400);
+  b.setup();
   loadEvents("data/games/0041400101/16.csv");
   
   control = new ControlP5(this);

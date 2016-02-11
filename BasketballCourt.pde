@@ -27,6 +27,10 @@ public class BasketballCourt implements Drawable {
   private float playerDiam;
   private float ballDiam;
   
+  private PImage floorTexture;
+  private PImage floorTexture2;
+  private PImage floorTexture3;
+  
   BasketballCourt() {
     float ratio = 400 / nbaLength;
     init(ratio);
@@ -62,6 +66,12 @@ public class BasketballCourt implements Drawable {
     playerDiam = 2*ratio;
     ballDiam = playerDiam*0.6;
   }
+  
+  public void setup() {
+    this.floorTexture = loadImage("images/floor-texture.jpg");
+    this.floorTexture2 = loadImage("images/floor-texture2.jpg");
+    this.floorTexture3 = loadImage("images/floor-texture3.jpg");
+  }
     
   public void draw() {
     pushMatrix();
@@ -71,7 +81,7 @@ public class BasketballCourt implements Drawable {
     strokeWeight(3);
     
     beginShape(); // Court
-    texture(loadImage("images/floor-texture.jpg"));
+    texture(this.floorTexture);
     textureWrap(REPEAT);
     vertex(0, 0, 0, 0);
     vertex(courtLength, 0, courtLength, 0);
@@ -86,7 +96,7 @@ public class BasketballCourt implements Drawable {
     float theta = TWO_PI / numParts;
     
     beginShape(); // Centre outter circle
-    texture(loadImage("images/floor-texture2.jpg"));
+    texture(this.floorTexture2);
     textureWrap(REPEAT);
     for (int i=0; i<numParts; i++) {
       float angle = theta * i;
@@ -99,7 +109,7 @@ public class BasketballCourt implements Drawable {
     endShape();
     
     beginShape(); // Centre inner circle
-    texture(loadImage("images/floor-texture3.jpg"));
+    texture(this.floorTexture3);
     textureWrap(REPEAT);
     for (int i=0; i<numParts; i++) {
       float angle = theta * i;
@@ -123,7 +133,7 @@ public class BasketballCourt implements Drawable {
     ellipse(laneLength, courtWidth/2, laneInnerWidth, laneInnerWidth); // Free throw circle
     
     beginShape(); // Outter lane
-    texture(loadImage("images/floor-texture2.jpg"));
+    texture(this.floorTexture2);
     textureWrap(REPEAT);
     vertex(0, courtWidth/2-laneOutterWidth/2, 0, courtWidth/2-laneOutterWidth/2);
     vertex(laneLength, courtWidth/2-laneOutterWidth/2, laneLength, courtWidth/2-laneOutterWidth/2);
@@ -133,7 +143,7 @@ public class BasketballCourt implements Drawable {
     endShape();
     
     beginShape(); // Inner lane
-    texture(loadImage("images/floor-texture3.jpg"));
+    texture(this.floorTexture3);
     textureWrap(REPEAT);
     vertex(0, courtWidth/2-laneInnerWidth/2, 0, courtWidth/2-laneInnerWidth/2);
     vertex(laneLength, courtWidth/2-laneInnerWidth/2, laneLength, courtWidth/2-laneInnerWidth/2);
@@ -160,7 +170,7 @@ public class BasketballCourt implements Drawable {
             laneInnerWidth, laneInnerWidth); // Free throw circle
             
     beginShape(); // Outter lane
-    texture(loadImage("images/floor-texture2.jpg"));
+    texture(this.floorTexture2);
     textureWrap(REPEAT);
     vertex(courtLength-laneLength, courtWidth/2-laneOutterWidth/2,
             courtLength-laneLength, courtWidth/2-laneOutterWidth/2);
@@ -175,7 +185,7 @@ public class BasketballCourt implements Drawable {
     endShape();
         
     beginShape(); // Inner lane
-    texture(loadImage("images/floor-texture3.jpg"));
+    texture(this.floorTexture3);
     textureWrap(REPEAT);
     vertex(courtLength-laneLength, courtWidth/2-laneInnerWidth/2,
             courtLength-laneLength, courtWidth/2-laneInnerWidth/2);
