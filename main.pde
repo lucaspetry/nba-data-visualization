@@ -14,8 +14,8 @@ void SWITCH_WINDOW(int window) {
 
 /** Setup and Draw Functions **/
 void setup() {
-  frameRate(40);
-  size(800, 600, P2D);
+  frameRate(30);
+  size(1000, 600, P2D);
   CURRENT_WINDOW.setup();
 }
 
