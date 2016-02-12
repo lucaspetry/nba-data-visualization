@@ -1,4 +1,4 @@
-public class BasketballCourt implements Drawable {
+public class BasketballCourt {
   
   private final static float nbaLength = 94;
   private final static float nbaWidth = 50;
