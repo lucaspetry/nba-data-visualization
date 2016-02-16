@@ -45,6 +45,9 @@ public class MainWindow implements Window {
     }
   }
     
+  public void mouseEvent(int eventType, int x, int y) {
+  }
+  
   public void event(ControlEvent event) {  
     if(event.isFrom(control.getController("events"))) {
       currentEvent = control.getController("events").getValue();

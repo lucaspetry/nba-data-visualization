@@ -1,10 +1,19 @@
+/** Mouse Events **/
+final int MOUSE_PRESSED = 0;
+final int MOUSE_RELEASED = 1;
+final int MOUSE_CLICKED = 2;
+final int MOUSE_MOVED = 3;
+final int MOUSE_DRAGGED = 4;
+final int MOUSE_WHEEL_UP = 5;
+final int MOUSE_WHEEL_DOWN = 6;
+
 /** Windows Control **/
 final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
 Window[] WINDOWS = new Window[]{new MainWindow(this),
                                 new GameWindow(this)};
-Window CURRENT_WINDOW = WINDOWS[MAIN_WINDOW];
+Window CURRENT_WINDOW = WINDOWS[GAME_WINDOW];
 
 void SWITCH_WINDOW(int window) {
   CURRENT_WINDOW.clearControls();
@@ -19,11 +28,41 @@ void setup() {
   CURRENT_WINDOW.setup();
 }
 
-void draw() {  
+void draw() {
   CURRENT_WINDOW.draw();
 }
 
 /** Control Events Handling **/
 void controlEvent(ControlEvent event) {  
   CURRENT_WINDOW.event(event);
+}
+
+/** Mouse Events Handling **/
+void mousePressed() {
+  CURRENT_WINDOW.mouseEvent(MOUSE_PRESSED, mouseX, mouseY);
+}
+
+void mouseReleased() {
+  CURRENT_WINDOW.mouseEvent(MOUSE_RELEASED, mouseX, mouseY);
+}
+
+void mouseClicked() {
+  CURRENT_WINDOW.mouseEvent(MOUSE_CLICKED, mouseX, mouseY);
+}
+
+void mouseMoved() {
+  CURRENT_WINDOW.mouseEvent(MOUSE_MOVED, mouseX, mouseY);
+}
+
+void mouseDragged() {
+  CURRENT_WINDOW.mouseEvent(MOUSE_DRAGGED, mouseX, mouseY);
+}
+
+void mouseWheel(MouseEvent event) { // Not working properly
+  float e = event.getCount();
+  
+  if(e > 0)
+    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_DOWN, mouseX, mouseY);
+  else
+    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_UP, mouseX, mouseY);
 }
