@@ -1,4 +1,4 @@
-public class VScrollBar {
+public class VScrollBar extends Component {
 
   private int x;
   private int y;
@@ -25,6 +25,9 @@ public class VScrollBar {
     else
       this.sliderHeight = (barHeight*barHeight)/scrollRange;
   }
+  
+  public void setup() {
+  }
 
   public void update() {
     this.x = (int) modelX(0, 0, 0);
@@ -41,6 +44,14 @@ public class VScrollBar {
       mouseOverSlider = false;
       mouseOverBar = false;
     }
+  }
+  
+  public int getHeight() {
+    return this.barHeight;
+  }
+  
+  public int getWidth() {
+    return this.barWidth;
   }
 
   public void mouseEvent(int eventType) {

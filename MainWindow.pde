@@ -19,13 +19,13 @@ public class MainWindow implements Window {
   
   public void draw() {
     background(255);
-    translate(0, 0);
+    translate((WINDOW_WIDTH - gamesBox.getWidth() - scrollBar.getWidth())/2 + gamesBox.getWidth(), 0);
     scrollBar.update();
     scrollBar.draw();
     
-    float img1Pos = scrollBar.getPos();
-    fill(100);
-    rect(100, img1Pos, 100, 600);
+    translate(-gamesBox.getWidth(), scrollBar.getPos());
+    gamesBox.draw();
+    
   }
     
   public void mouseEvent(int eventType) {
