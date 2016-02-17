@@ -1,7 +1,7 @@
 public class VScrollBar {
 
-  private float x;
-  private float y;
+  private int x;
+  private int y;
   private int barWidth; // Bar width
   private int barHeight; // Bar height
   private int sliderPos; // Vertical position of the slider
@@ -11,21 +11,10 @@ public class VScrollBar {
   private boolean mouseOverSlider;
   private boolean mousePress;
 
-  //int swidth, sheight;    // width and height of bar
-  //float xpos, ypos;       // x and y position of bar
-  //float spos, newspos;    // x position of slider
-  //float sposMin, sposMax; // max and min values of slider
-  //int loose;              // how loose/heavy
-  //boolean over;           // is the mouse over the slider?
-  //boolean locked;
-  //float ratio;
-
-  public VScrollBar(int barWidth, int barHeight, int scrollRange) {
-    this.x = modelX(0, 0, 0);
-    this.y = modelY(0, 0, 0);
+  public VScrollBar(int barWidth, int barHeight) {
     this.barWidth = barWidth;
     this.barHeight = barHeight;
-    this.scrollRange = scrollRange;
+    this.scrollRange = barHeight;
     this.sliderHeight = (int) (barWidth*0.8);
     this.sliderPos = 0;
     this.mouseOverBar = false;
@@ -34,6 +23,8 @@ public class VScrollBar {
   }
 
   public void update() {
+    this.x = (int) modelX(0, 0, 0);
+    this.y = (int) modelY(0, 0, 0);
     if (mouseX > x && mouseX < x+barWidth &&
       mouseY > y+sliderPos && mouseY < y+sliderPos+sliderHeight) {
       mouseOverSlider = true;
@@ -59,7 +50,7 @@ public class VScrollBar {
           mousePress = true;
         else if(mouseOverBar) {
           mousePress = true;
-          sliderPos = mouseY - sliderHeight/2;
+          sliderPos = mouseY - y - sliderHeight/2;
         }
         break;
       case MOUSE_RELEASED:
@@ -67,17 +58,17 @@ public class VScrollBar {
         break;
       case MOUSE_DRAGGED:
         if(mousePress) {
-          sliderPos = mouseY - sliderHeight/2;
+          sliderPos = mouseY - y - sliderHeight/2;
         }
         break;
       default:
         break;
     }
     
-    if(y+sliderPos < y)
+    if(sliderPos < 0)
       sliderPos = 0;
-    else if(y+sliderPos+sliderHeight > y+barHeight)
-      sliderPos = (int) y+barHeight-sliderHeight;
+    else if(sliderPos+sliderHeight > barHeight)
+      sliderPos = barHeight-sliderHeight;
   }
 
   public void draw() {
@@ -103,6 +94,10 @@ public class VScrollBar {
   
   public float getPos(float objHeight) {
     float pct = sliderPos/(float) (barHeight - sliderHeight);
-    return (scrollRange-objHeight)*(1-pct);
+    
+    if(scrollRange > objHeight)
+      return 0;
+    else
+      return (scrollRange-objHeight)*pct;
   }
 }

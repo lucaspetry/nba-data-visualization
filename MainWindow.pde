@@ -13,26 +13,17 @@ public class MainWindow implements Window {
 
   public void setup() {
     noStroke();
-    scrollBar = new VScrollBar(30, 200, 300);
-    
-    // Load images
-    img1 = loadImage("images/floor-texture.jpg");
+    img1 = loadImage("images/NBA_logo.jpg");
+    scrollBar = new VScrollBar(30, 400);
   }
   
   public void draw() {
     background(255);
-    
-    // Get the position of the img1 scrollbar
-    // and convert to a value to display the img1 image 
-    float img1Pos = scrollBar.getPos(img1.height);
-    fill(255);
-    image(img1, 0, img1Pos);
-       
+    float img1Pos = scrollBar.getPos(600);
+    fill(100);
+    rect(100, img1Pos, 100, 600);
     scrollBar.update();
     scrollBar.draw();
-    
-    stroke(0);
-    line(0, height/2, width, height/2);
   }
     
   public void mouseEvent(int eventType) {
