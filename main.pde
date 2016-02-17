@@ -13,7 +13,7 @@ final int GAME_WINDOW = 1;
 
 Window[] WINDOWS = new Window[]{new MainWindow(this),
                                 new GameWindow(this)};
-Window CURRENT_WINDOW = WINDOWS[GAME_WINDOW];
+Window CURRENT_WINDOW = WINDOWS[MAIN_WINDOW];
 
 void SWITCH_WINDOW(int window) {
   CURRENT_WINDOW.clearControls();
@@ -39,30 +39,30 @@ void controlEvent(ControlEvent event) {
 
 /** Mouse Events Handling **/
 void mousePressed() {
-  CURRENT_WINDOW.mouseEvent(MOUSE_PRESSED, mouseX, mouseY);
+  CURRENT_WINDOW.mouseEvent(MOUSE_PRESSED);
 }
 
 void mouseReleased() {
-  CURRENT_WINDOW.mouseEvent(MOUSE_RELEASED, mouseX, mouseY);
+  CURRENT_WINDOW.mouseEvent(MOUSE_RELEASED);
 }
 
 void mouseClicked() {
-  CURRENT_WINDOW.mouseEvent(MOUSE_CLICKED, mouseX, mouseY);
+  CURRENT_WINDOW.mouseEvent(MOUSE_CLICKED);
 }
 
 void mouseMoved() {
-  CURRENT_WINDOW.mouseEvent(MOUSE_MOVED, mouseX, mouseY);
+  CURRENT_WINDOW.mouseEvent(MOUSE_MOVED);
 }
 
 void mouseDragged() {
-  CURRENT_WINDOW.mouseEvent(MOUSE_DRAGGED, mouseX, mouseY);
+  CURRENT_WINDOW.mouseEvent(MOUSE_DRAGGED);
 }
 
 void mouseWheel(MouseEvent event) { // Not working properly
   float e = event.getCount();
   
   if(e > 0)
-    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_DOWN, mouseX, mouseY);
+    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_DOWN);
   else
-    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_UP, mouseX, mouseY);
+    CURRENT_WINDOW.mouseEvent(MOUSE_WHEEL_UP);
 }

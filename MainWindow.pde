@@ -1,100 +1,52 @@
 public class MainWindow implements Window {
   
-  ControlP5 control;
-  Button play;
-  Slider timeFrame;
-  PApplet main;
+  private final static String playerImgUrl = "http://stats.nba.com/media/players/132x132/PLAYER_ID.png";
+  private final static String teamImgUrl = "http://stats.nba.com/media/img/teams/logos/ABBREVIATION_logo.svg";
   
-  BasketballCourt b;
-  ArrayList<GameEvent> events;
-  float currentEvent = 0;
-
+  PApplet main;
+  VScrollBar scrollBar;
+  PImage img1;  // Two images to load
+  
   public MainWindow(PApplet main) {
     this.main = main;
   }
-  
+
   public void setup() {
-    b = new BasketballCourt(700, 400);
-    b.setup();
-    loadEvents("data/games/0041400101/16.csv");
+    noStroke();
+    scrollBar = new VScrollBar(30, 200, 300);
     
-    control = new ControlP5(main);
-    timeFrame = control.addSlider("events")
-          .setPosition(100, 20)
-          .setSize(200,25)
-          .setValue(0)
-          .setRange(0, events.size() - 1);
-    play = control.addButton("Play/Pause", "", "playback")
-       .setValue(0)
-       .setPosition(20, 20)
-       .setSize(70, 25);
+    // Load images
+    img1 = loadImage("images/floor-texture.jpg");
   }
   
   public void draw() {
-    background(100);
-    control.draw();
-    b.draw();
+    background(255);
     
-    GameEvent ge = events.get((int)currentEvent);
-    ArrayList<PlayerPosition[]> teams = ge.getTeams();
-    b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
+    // Get the position of the img1 scrollbar
+    // and convert to a value to display the img1 image 
+    float img1Pos = scrollBar.getPos(img1.height);
+    fill(255);
+    image(img1, 0, img1Pos);
+       
+    scrollBar.update();
+    scrollBar.draw();
     
-    // Draw players
-    if(play.isOn()) {
-      timeFrame.setValue((currentEvent+1)%events.size());
-    }
+    stroke(0);
+    line(0, height/2, width, height/2);
   }
     
-  public void mouseEvent(int eventType, int x, int y) {
+  public void mouseEvent(int eventType) {
+    scrollBar.mouseEvent(eventType);
   }
   
-  public void event(ControlEvent event) {  
-    if(event.isFrom(control.getController("events"))) {
-      currentEvent = control.getController("events").getValue();
-    }
+  public void event(ControlEvent event) {
   }
   
   public void clearControls() {
-    control.dispose();
   }
   
-  private void loadEvents(String fileName) {
-    String lines[] = main.loadStrings(fileName);
-    events = new ArrayList<GameEvent>(lines.length/10);
-    PlayerPosition[] players = new PlayerPosition[10];
-    int p = 0;
-      
-    int moment = -1;
-    float gameClock = -1;
-    float shotClock = -1;
-    int period = -1;
-    float[] ball = new float[]{0, 0, 0};
+  private void loadGames() {
     
-    for(int i = 0; i < lines.length; i++) {
-      String[] fields = lines[i].split(",");
-      int curMom = Integer.parseInt(fields[6]);
-      
-      if(curMom != moment) { // New event
-        if(moment != -1)
-          events.add(new GameEvent(moment, gameClock, shotClock,
-                      period, ball, new PlayerPosition[]{players[0], players[1], players[2], players[3], players[4]},
-                    new PlayerPosition[]{players[5], players[6], players[7], players[8], players[9]}));
-        moment = curMom;
-        p = 0;
-        gameClock = Float.parseFloat(fields[7]);
-        shotClock = Float.parseFloat(fields[8]);
-        period = Integer.parseInt(fields[9]);
-        ball[0] = Float.parseFloat(fields[3]);
-        ball[1] = Float.parseFloat(fields[4]);
-        ball[2] = Float.parseFloat(fields[5]);
-        
-      } else { // Same event
-        int pId = Integer.parseInt(fields[2]);
-        players[p] = new PlayerPosition(new Player(pId, "", "", 0, ""),
-              Float.parseFloat(fields[3]), Float.parseFloat(fields[4]));
-        p++;
-      }
-    }
   }
 
 }

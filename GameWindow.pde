@@ -45,7 +45,7 @@ public class GameWindow implements Window {
     }
   }
   
-  public void mouseEvent(int eventType, int x, int y) {
+  public void mouseEvent(int eventType) {
     switch(eventType) {
       case MOUSE_PRESSED:
         println("pressed");
