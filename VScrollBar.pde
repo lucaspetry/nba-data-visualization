@@ -11,15 +11,19 @@ public class VScrollBar {
   private boolean mouseOverSlider;
   private boolean mousePress;
 
-  public VScrollBar(int barWidth, int barHeight) {
+  public VScrollBar(int barWidth, int barHeight, int scrollRange) {
     this.barWidth = barWidth;
     this.barHeight = barHeight;
-    this.scrollRange = barHeight;
-    this.sliderHeight = (int) (barWidth*0.8);
+    this.scrollRange = scrollRange;
     this.sliderPos = 0;
     this.mouseOverBar = false;
     this.mouseOverSlider = false;
     this.mousePress = false;
+    
+    if(scrollRange <= barHeight)
+      this.sliderHeight = barHeight;
+    else
+      this.sliderHeight = (barHeight*barHeight)/scrollRange;
   }
 
   public void update() {
@@ -54,7 +58,8 @@ public class VScrollBar {
         break;
       case MOUSE_DRAGGED:
         if(mousePress) {
-          sliderPos = mouseY - y - sliderHeight/2;
+          if(mouseY > y && mouseY < y+barHeight)
+            sliderPos += mouseY - pmouseY;
         }
         break;
       default:
@@ -82,18 +87,13 @@ public class VScrollBar {
     }
     rect(0, sliderPos, barWidth, sliderHeight);
   }
-
+  
   public float getPos() {
     float pct = sliderPos/(float) (barHeight - sliderHeight);
-    return scrollRange*(1-pct);
-  }
-  
-  public float getPos(float objHeight) {
-    float pct = sliderPos/(float) (barHeight - sliderHeight);
     
-    if(scrollRange >= objHeight)
+    if(barHeight >= scrollRange)
       return 0;
     else
-      return (scrollRange-objHeight)*pct;
+      return (barHeight-scrollRange)*pct;
   }
 }

@@ -1,3 +1,7 @@
+/** Window **/
+final int WINDOW_WIDTH = 1000;
+final int WINDOW_HEIGHT = 600;
+
 /** Mouse Events **/
 final int MOUSE_PRESSED = 0;
 final int MOUSE_RELEASED = 1;
