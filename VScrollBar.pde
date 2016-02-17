@@ -39,10 +39,6 @@ public class VScrollBar {
     }
   }
 
-  private float constrain(float val, float minv, float maxv) {
-    return min(max(val, minv), maxv);
-  }
-
   public void mouseEvent(int eventType) {
     switch(eventType) {
       case MOUSE_PRESSED:
@@ -95,7 +91,7 @@ public class VScrollBar {
   public float getPos(float objHeight) {
     float pct = sliderPos/(float) (barHeight - sliderHeight);
     
-    if(scrollRange > objHeight)
+    if(scrollRange >= objHeight)
       return 0;
     else
       return (scrollRange-objHeight)*pct;
