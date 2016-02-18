@@ -1,6 +1,5 @@
 public class GameWindow implements Window {
 
-  PApplet main;
   ControlP5 control;
   Button play;
   Slider timeFrame;
@@ -9,8 +8,7 @@ public class GameWindow implements Window {
   ArrayList<GameEvent> events;
   float currentEvent = 0;
 
-  public GameWindow(PApplet main) {
-    this.main = main;
+  public GameWindow() {
   }
   
   public void setup() {
@@ -18,7 +16,7 @@ public class GameWindow implements Window {
     b.setup();
     loadEvents("data/games/0041400101/16.csv");
     
-    control = new ControlP5(main);
+    control = new ControlP5(WINDOW_APPLET);
     timeFrame = control.addSlider("events")
           .setPosition(100, 20)
           .setSize(200,25)
@@ -82,7 +80,7 @@ public class GameWindow implements Window {
   }
   
   private void loadEvents(String fileName) {
-    String lines[] = main.loadStrings(fileName);
+    String lines[] = WINDOW_APPLET.loadStrings(fileName);
     events = new ArrayList<GameEvent>(lines.length/10);
     PlayerPosition[] players = new PlayerPosition[10];
     int p = 0;

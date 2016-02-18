@@ -1,6 +1,12 @@
+/** Objects **/
+HashMap<Integer, Player> PLAYERS = new HashMap<Integer, Player>();
+HashMap<Integer, Team> TEAMS = new HashMap<Integer, Team>();
+HashMap<Integer, Game> GAMES = new HashMap<Integer, Game>();
+
 /** Window **/
 final int WINDOW_WIDTH = 1000;
 final int WINDOW_HEIGHT = 600;
+final PApplet WINDOW_APPLET = this;
 
 /** Mouse Events **/
 final int MOUSE_PRESSED = 0;
@@ -15,8 +21,8 @@ final int MOUSE_WHEEL_DOWN = 6;
 final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
-Window[] WINDOWS = new Window[]{new MainWindow(this),
-                                new GameWindow(this)};
+Window[] WINDOWS = new Window[]{new MainWindow(),
+                                new GameWindow()};
 Window CURRENT_WINDOW = WINDOWS[MAIN_WINDOW];
 
 void SWITCH_WINDOW(int window) {
@@ -27,8 +33,15 @@ void SWITCH_WINDOW(int window) {
 
 /** Setup and Draw Functions **/
 void setup() {
+  // Basic conf
   frameRate(30);
   size(1000, 600, P2D);
+  
+  // Load games, teams and players
+  FileLoader f = new FileLoader();
+  f.loadObjects();
+  
+  // Setup current window
   CURRENT_WINDOW.setup();
 }
 
