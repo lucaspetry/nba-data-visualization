@@ -64,7 +64,6 @@ void setup() {
   
   // Setup current window
   CURRENT_WINDOW.setup();
-  //thread("test");
 }
 
 void loadGlobals() {

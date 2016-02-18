@@ -40,4 +40,8 @@ public class Game {
     return this.visitorScore;
   }
   
+  public ArrayList<GameEvent> getEvents() {
+    return new FileLoader().loadGameEvents(this.id);
+  }
+  
 }

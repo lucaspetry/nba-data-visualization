@@ -10,7 +10,38 @@ public class FileLoader {
     this.gamesFile = "data2/games.csv";
   }
   
-  public ArrayList<GameEvent> loadEvents(Game game) { // TODO
+  public ArrayList<GameEvent> loadGameEvents(int gameId) {
+    JSONObject json = loadJSONObject("data2/playbyplay/00" + gameId + ".json");
+    JSONArray rowSet = json.getJSONArray("resultSets")
+                          .getJSONObject(0).getJSONArray("rowSet");
+                          
+    ArrayList<GameEvent> events = new ArrayList<GameEvent>(rowSet.size());
+    
+    for(int i = 0; i < rowSet.size(); i++) {
+      JSONArray r = rowSet.getJSONArray(i);
+      
+      String homeDescription = "";
+      String neutralDescription = "";
+      String visitorDescription = "";
+      String score = "";
+      
+      if(!r.isNull(7))
+        homeDescription = r.getString(7);
+      if(!r.isNull(8))
+        neutralDescription = r.getString(8);
+      if(!r.isNull(9))
+        visitorDescription = r.getString(9);
+      if(!r.isNull(10))
+        score = r.getString(10);
+      
+      events.add(new GameEvent(gameId, r.getInt(1), r.getInt(4), r.getString(6), score,
+                    homeDescription, neutralDescription, visitorDescription));
+    }
+    
+    return events;
+  }
+  
+  public ArrayList<GameEventFrame> loadGameEventFrames(int gameId, int eventNumber) {
     return null;
   }
   

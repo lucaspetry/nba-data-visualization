@@ -1,33 +1,52 @@
 public class GameEvent {
   
-  private int moment;
-  private float gameClock;
-  private float shotClock;
+  private int gameId;
+  private int eventNumber;
   private int period;
-  private float[] ball; // x, y, height
-  private PlayerPosition[] playersA;
-  private PlayerPosition[] playersB;
+  private String periodClock;
+  private String score;
+  private String homeDescription;
+  private String neutralDescription;
+  private String visitorDescription;
   
-  public GameEvent(int moment, float gameClock, float shotClock, int period,
-                    float[] ball, PlayerPosition[] playersA, PlayerPosition[] playersB) {
-    this.moment = moment;
-    this.gameClock = gameClock;
-    this.shotClock = shotClock;
+  public GameEvent(int gameId, int eventNumber, int period, String periodClock, String score,
+                    String homeDescription, String neutralDescription, String visitorDescription) {
+    this.gameId = gameId;
+    this.eventNumber = eventNumber;
     this.period = period;
-    this.ball = new float[] {ball[0], ball[1], ball[2]};
-    this.playersA = new PlayerPosition[]{playersA[0], playersA[1], playersA[2], playersA[3], playersA[4]};
-    this.playersB = new PlayerPosition[]{playersB[0], playersB[1], playersB[2], playersB[3], playersB[4]};
+    this.periodClock = periodClock;
+    this.score = score;
+    this.homeDescription = homeDescription;
+    this.neutralDescription = neutralDescription;
+    this.visitorDescription = visitorDescription;
   }
   
-  public ArrayList<PlayerPosition[]> getTeams() {
-    ArrayList<PlayerPosition[]> teams = new ArrayList<PlayerPosition[]>(2);
-    teams.add(playersA);
-    teams.add(playersB);
-    return teams;
+  public int getPeriod() {
+    return this.period;
   }
   
-  public float[] getBall() {
-    return this.ball;
+  public String getClock() {
+    return this.periodClock;
+  }
+  
+  public String getScore() {
+    return this.score;
+  }
+  
+  public String getHomeDescription() {
+    return this.homeDescription;
+  }
+  
+  public String getNeutralDescription() {
+    return this.neutralDescription;
+  }
+  
+  public String getVisitorDescription() {
+    return this.visitorDescription;
+  }
+  
+  public ArrayList<GameEventFrame> getEventFrames() {
+    return new FileLoader().loadGameEventFrames(this.gameId, this.eventNumber);
   }
   
 }

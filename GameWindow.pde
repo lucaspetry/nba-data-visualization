@@ -5,7 +5,7 @@ public class GameWindow implements Window {
   Slider timeFrame;
   
   BasketballCourt b;
-  ArrayList<GameEvent> events;
+  ArrayList<GameEventFrame> events;
   float currentEvent = 0;
 
   public GameWindow(Game game) {
@@ -14,7 +14,7 @@ public class GameWindow implements Window {
   public void setup() {
     b = new BasketballCourt(700, 400);
     b.setup();
-    loadEvents("data/games/0041400101/16.csv");
+    loadEvents("data/games/0041400101/2.csv");
     
     control = new ControlP5(WINDOW_APPLET);
     timeFrame = control.addSlider("events")
@@ -33,7 +33,7 @@ public class GameWindow implements Window {
     control.draw();
     b.draw();
     
-    GameEvent ge = events.get((int)currentEvent);
+    GameEventFrame ge = events.get((int)currentEvent);
     ArrayList<PlayerPosition[]> teams = ge.getTeams();
     b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
     
@@ -81,7 +81,7 @@ public class GameWindow implements Window {
   
   private void loadEvents(String fileName) {
     String lines[] = WINDOW_APPLET.loadStrings(fileName);
-    events = new ArrayList<GameEvent>(lines.length/10);
+    events = new ArrayList<GameEventFrame>(lines.length/10);
     PlayerPosition[] players = new PlayerPosition[10];
     int p = 0;
       
@@ -97,7 +97,7 @@ public class GameWindow implements Window {
       
       if(curMom != moment) { // New event
         if(moment != -1)
-          events.add(new GameEvent(moment, gameClock, shotClock,
+          events.add(new GameEventFrame(moment, gameClock, shotClock,
                       period, ball, new PlayerPosition[]{players[0], players[1], players[2], players[3], players[4]},
                     new PlayerPosition[]{players[5], players[6], players[7], players[8], players[9]}));
         moment = curMom;
