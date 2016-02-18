@@ -1,12 +1,20 @@
-/** Objects **/
+/** Global objects **/
 HashMap<Integer, Player> PLAYERS = new HashMap<Integer, Player>();
 HashMap<Integer, Team> TEAMS = new HashMap<Integer, Team>();
 HashMap<Integer, Game> GAMES = new HashMap<Integer, Game>();
 
-/** Colors **/
+/** Global images **/
+PImage NBA_LOGO;
+
+/** Global colors **/
 color COLOR_BLUE1 = color(233, 242, 249);
 color COLOR_BLUE2 = color(210, 228, 242);
 color COLOR_BLUE3 = color(156, 196, 228);
+color COLOR_BLUE4 = color(27, 50, 95);
+
+color COLOR_RED1 = color(204, 42, 65);
+color COLOR_BACKGROUND = color(232, 202, 164);
+color COLOR_ORANGE1 = color(242, 108, 79);
 
 color COLOR_GRAY1 = color(81, 81, 81);
 
@@ -18,9 +26,10 @@ PFont FONT_20;
 
 PFont FONT_BOLD_14;
 PFont FONT_BOLD_24;
+PFont FONT_BOLD_28;
 
 /** Window **/
-final int WINDOW_WIDTH = 1000;
+final int WINDOW_WIDTH = 900;
 final int WINDOW_HEIGHT = 600;
 final PApplet WINDOW_APPLET = this;
 
@@ -49,7 +58,19 @@ void SWITCH_WINDOW(Window window) {
 void setup() {
   // Basic conf
   frameRate(60);
-  size(1000, 600, P2D);
+  size(900, 600, P2D);
+  
+  this.loadGlobals();
+  
+  // Setup current window
+  CURRENT_WINDOW.setup();
+  //thread("test");
+}
+
+void loadGlobals() {
+  // Load images
+  NBA_LOGO = loadImage("images/NBA.png");
+  NBA_LOGO.resize(34, 78);
   
   // Load fonts
   FONT_12 = createFont("Arial", 12, true);
@@ -58,14 +79,11 @@ void setup() {
   FONT_20 = createFont("Arial", 20, true);
   FONT_BOLD_14 = createFont("Arial Bold", 14, true);
   FONT_BOLD_24 = createFont("Arial Bold", 24, true);
-    
+  FONT_BOLD_28 = createFont("Arial Bold", 28, true);
+
   // Load games, teams and players
   FileLoader f = new FileLoader();
   f.loadObjects();
-  
-  // Setup current window
-  CURRENT_WINDOW.setup();
-  //thread("test");
 }
 
 // REMOVE THIS!!!
