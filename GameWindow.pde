@@ -8,7 +8,7 @@ public class GameWindow implements Window {
   ArrayList<GameEvent> events;
   float currentEvent = 0;
 
-  public GameWindow() {
+  public GameWindow(Game game) {
   }
   
   public void setup() {

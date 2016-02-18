@@ -1,14 +1,18 @@
 public class Team {
   
+  private final static String teamPrefixUrl = "http://i.cdn.turner.com/nba/nba/.element/img/1.0/logos/teamlogos_80x64/";
+  private final static String teamSufixUrl = ".gif";
   private int id;
   private String name;
   private String abbreviation;
   private HashMap<Integer, Player> players;
+  private PImage logo;
   
   public Team(int id, String name, String abbreviation, Player[] players) {
     this.id = id;
     this.name = name;
     this.abbreviation = abbreviation;
+    this.logo = loadImage(teamPrefixUrl + this.getAbbreviation().toLowerCase() + teamSufixUrl, "gif");
     this.players = new HashMap<Integer, Player>(10);
     
     for(Player p : players)
@@ -25,6 +29,10 @@ public class Team {
   
   public String getAbbreviation() {
     return this.abbreviation;
+  }
+  
+  public PImage getLogo() {
+    return this.logo;
   }
   
 }

@@ -1,10 +1,17 @@
 public class FileLoader {
   
-  private final static String gamesFile = "data/games.csv";
-  private final static String playersFile = "data/players.csv";
-  private final static String teamsFile = "data/team.csv";
+  private String playersFile;
+  private String teamsFile;
+  private String gamesFile;
 
   public FileLoader() {
+    this.playersFile = "data/players.csv";
+    this.teamsFile = "data/team.csv";
+    this.gamesFile = "data2/games.csv";
+  }
+  
+  public ArrayList<GameEvent> loadEvents(Game game) { // TODO
+    return null;
   }
   
   public void loadObjects() {
@@ -55,9 +62,11 @@ public class FileLoader {
       String date = r.getString("gamedate");
       int homeTeam = r.getInt("hometeamid");
       int visitorTeam = r.getInt("visitorteamid");
+      int homeScore = r.getInt("homescore");
+      int visitorScore = r.getInt("visitorscore");
       
       GAMES.put(id, new Game(id, date,
-                TEAMS.get(homeTeam), TEAMS.get(visitorTeam)));
+                TEAMS.get(homeTeam), TEAMS.get(visitorTeam), homeScore, visitorScore));
     }
   }
     

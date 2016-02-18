@@ -4,12 +4,16 @@ public class Game {
   private String date;
   private Team homeTeam;
   private Team visitorTeam;
+  private int homeScore;
+  private int visitorScore;
   
-  public Game(int id, String date, Team homeTeam, Team visitorTeam) {
+  public Game(int id, String date, Team homeTeam, Team visitorTeam, int homeScore, int visitorScore) {
     this.id = id;
     this.date = date;
     this.homeTeam = homeTeam;
     this.visitorTeam = visitorTeam;
+    this.homeScore = homeScore;
+    this.visitorScore = visitorScore;
   }
   
   public int getId() {
@@ -26,6 +30,14 @@ public class Game {
   
   public Team getVisitorTeam() {
     return this.visitorTeam;
+  }
+  
+  public int getHomeScore() {
+    return this.homeScore;
+  }
+  
+  public int getVisitorScore() {
+    return this.visitorScore;
   }
   
 }

@@ -3,6 +3,22 @@ HashMap<Integer, Player> PLAYERS = new HashMap<Integer, Player>();
 HashMap<Integer, Team> TEAMS = new HashMap<Integer, Team>();
 HashMap<Integer, Game> GAMES = new HashMap<Integer, Game>();
 
+/** Colors **/
+color COLOR_BLUE1 = color(233, 242, 249);
+color COLOR_BLUE2 = color(210, 228, 242);
+color COLOR_BLUE3 = color(156, 196, 228);
+
+color COLOR_GRAY1 = color(81, 81, 81);
+
+/** Fonts **/
+PFont FONT_12;
+PFont FONT_14;
+PFont FONT_16;
+PFont FONT_20;
+
+PFont FONT_BOLD_14;
+PFont FONT_BOLD_24;
+
 /** Window **/
 final int WINDOW_WIDTH = 1000;
 final int WINDOW_HEIGHT = 600;
@@ -21,28 +37,53 @@ final int MOUSE_WHEEL_DOWN = 6;
 final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
-Window[] WINDOWS = new Window[]{new MainWindow(),
-                                new GameWindow()};
-Window CURRENT_WINDOW = WINDOWS[MAIN_WINDOW];
+Window CURRENT_WINDOW = new MainWindow();
 
-void SWITCH_WINDOW(int window) {
+void SWITCH_WINDOW(Window window) {
   CURRENT_WINDOW.clearControls();
-  CURRENT_WINDOW = WINDOWS[window];
+  CURRENT_WINDOW = window;
   CURRENT_WINDOW.setup();
 }
 
 /** Setup and Draw Functions **/
 void setup() {
   // Basic conf
-  frameRate(30);
+  frameRate(60);
   size(1000, 600, P2D);
   
+  // Load fonts
+  FONT_12 = createFont("Arial", 12, true);
+  FONT_14 = createFont("Arial", 14, true);
+  FONT_16 = createFont("Arial", 16, true);
+  FONT_20 = createFont("Arial", 20, true);
+  FONT_BOLD_14 = createFont("Arial Bold", 14, true);
+  FONT_BOLD_24 = createFont("Arial Bold", 24, true);
+    
   // Load games, teams and players
   FileLoader f = new FileLoader();
   f.loadObjects();
   
   // Setup current window
   CURRENT_WINDOW.setup();
+  //thread("test");
+}
+
+// REMOVE THIS!!!
+void test() {
+  Table tableGames = loadTable("data/games.csv", "header");
+  tableGames.addColumn("homescore");
+  tableGames.addColumn("visitorscore");
+            
+  for(TableRow r : tableGames.rows()) {
+    JSONObject json = loadJSONObject("data2/playbyplay/00" + r.getInt("gameid") + ".json");
+    JSONArray results = json.getJSONArray("resultSets");
+    JSONArray rowSet = results.getJSONObject(0).getJSONArray("rowSet");
+    JSONArray lastRow = rowSet.getJSONArray(rowSet.size()-1);
+    
+    r.setInt("homescore", Integer.parseInt(lastRow.getString(lastRow.size()-2).split(" - ")[1]));
+    r.setInt("visitorscore", Integer.parseInt(lastRow.getString(lastRow.size()-2).split(" - ")[0]));
+  }
+  saveTable(tableGames, "data/games2.csv");
 }
 
 void draw() {
