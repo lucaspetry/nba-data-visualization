@@ -48,7 +48,8 @@ public class FileLoader {
   
   public ArrayList<GameEventFrame> loadGameEventFrames(int gameId, int eventNumber) {
     Table tableFrames = loadTable("data/games/00" + gameId + "/" + eventNumber + ".csv");
-    ArrayList<GameEventFrame> events = new ArrayList<GameEventFrame>(tableFrames.getRowCount()/10);
+    int tableSize = tableFrames.getRowCount();
+    ArrayList<GameEventFrame> events = new ArrayList<GameEventFrame>(tableSize/10);
     
     float gameClock = -1;
     float shotClock = -1;
@@ -56,16 +57,18 @@ public class FileLoader {
     PlayerPosition[] homePlayers = new PlayerPosition[5];
     PlayerPosition[] visitorPlayers = new PlayerPosition[5];
         
-    for(int i = 0; tableFrames.matchRow("^" + i + "$", 6) != null; i++) {
-      TableRow firstRow = tableFrames.matchRow("^" + i + "$", 6);
+    for(int i = 0; i < tableSize; i++) {
+      TableRow firstRow = tableFrames.getRow(i);
       
+      int moment = firstRow.getInt(6);
       gameClock = firstRow.getFloat(7);
       shotClock = firstRow.getFloat(8);
       float[] ball = new float[]{0, 0, 0};
       int homeIdx = 0;
       int visitorIdx = 0;
           
-      for(TableRow r : tableFrames.matchRows("^" + i + "$", 6)) {
+      for(; i < tableSize && tableFrames.getRow(i).getInt(6) == moment; i++) {
+        TableRow r = tableFrames.getRow(i);
         int typeRow = r.getInt(1);
         if(typeRow == -1) {
           ball[0] = r.getFloat(3);
@@ -77,7 +80,8 @@ public class FileLoader {
           visitorPlayers[visitorIdx++] = new PlayerPosition(PLAYERS.get(r.getInt(2)), r.getFloat(3), r.getFloat(4));
         }
       }
-      events.add(new GameEventFrame(i, gameClock, shotClock, ball, homePlayers, visitorPlayers));
+      i--;
+      events.add(new GameEventFrame(moment, gameClock, shotClock, ball, homePlayers, visitorPlayers));
     }
     
     return events;

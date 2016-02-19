@@ -1,6 +1,9 @@
 public class PlayerWindow implements Window {
   
-  public PlayerWindow(Player player) {
+  private Window previousWindow;
+  
+  public PlayerWindow(Window previousWindow, Player player) {
+    this.previousWindow = previousWindow;
   }
   
   public void setup() {

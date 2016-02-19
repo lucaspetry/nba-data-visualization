@@ -3,9 +3,10 @@ public class BasketballCourt {
   private final static float nbaLength = 94;
   private final static float nbaWidth = 50;
   private final static float camHeight = 25.45932;
-  private final static float offX = 50;
-  private final static float offY = 150;
   private final static int numPartsCircle = 100;
+  
+  private int x;
+  private int y;
   
   private float ratio;
   private float courtLength;
@@ -32,6 +33,9 @@ public class BasketballCourt {
   private PImage floorTexture2;
   private PImage floorTexture3;
   
+  private PlayerPosition[] homeTeam;
+  private PlayerPosition[] visitingTeam;
+  
   BasketballCourt() {
     float ratio = 400 / nbaLength;
     init(ratio);
@@ -46,6 +50,8 @@ public class BasketballCourt {
   }
   
   private void init(float ratio) {
+    this.x = (int) modelX(0, 0, 0);
+    this.y = (int) modelY(0, 0, 0);
     this.ratio = ratio;
     courtLength = nbaLength * ratio;
     courtWidth = nbaWidth * ratio;
@@ -75,9 +81,8 @@ public class BasketballCourt {
   }
     
   public void draw() {
-    pushMatrix();
-    translate(offX, offY);
-    
+    this.x = (int) modelX(0, 0, 0);
+    this.y = (int) modelY(0, 0, 0);
     stroke(255);
     strokeWeight(3);
     
@@ -204,13 +209,31 @@ public class BasketballCourt {
     arc(courtLength-backboardOffX-basketDiam/2, courtWidth/2, // Basket arc
         basketArc*2, basketArc*2, radians(90), radians(270));
     ellipse(courtLength-backboardOffX-basketDiam/2, courtWidth/2, basketDiam, basketDiam); // Basket
-    
-    popMatrix();
+  }
+  
+  public boolean mouseOver(PlayerPosition p) {
+    if(dist(mouseX, mouseY, x+p.getX()*ratio, y+p.getY()*ratio) < playerDiam*0.5)
+      return true;
+    return false;
+  }
+  
+  public void mouseEvent(int eventType) {
+    if(eventType == MOUSE_CLICKED) {
+      for(PlayerPosition p : homeTeam) {
+        if(dist(mouseX, mouseY, x+p.getX()*ratio, y+p.getY()*ratio) < playerDiam*0.5)
+          SWITCH_WINDOW(new PlayerWindow(CURRENT_WINDOW, p.getPlayer()));
+      }
+      
+      for(PlayerPosition p : visitingTeam) {
+        if(dist(mouseX, mouseY, x+p.getX()*ratio, y+p.getY()*ratio) < playerDiam*0.5)
+          SWITCH_WINDOW(new PlayerWindow(CURRENT_WINDOW, p.getPlayer()));
+      }
+    }
   }
   
   private void drawPlayersAndBall(PlayerPosition[] homeTeam, PlayerPosition[] visitingTeam, float[] ball) {
-    pushMatrix();
-    translate(offX, offY);
+    this.homeTeam = homeTeam;
+    this.visitingTeam = visitingTeam;
     noStroke();
     
     float newBallDiam = camHeight/(camHeight-ball[2])*ballDiam;
@@ -220,8 +243,11 @@ public class BasketballCourt {
     ellipse(ball[0]*ratio, ball[1]*ratio, newBallDiam, newBallDiam);   
     
     // Home team
-    for(PlayerPosition p : homeTeam) {
-      fill(255, 0, 0);
+    for(PlayerPosition p : this.homeTeam) {
+      if(!this.mouseOver(p))
+        fill(255, 0, 0);
+      else
+        fill(0, 0, 0);
       ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);
       
       fill(255);
@@ -231,8 +257,11 @@ public class BasketballCourt {
     }
     
     // Visiting teams
-    for(PlayerPosition p : visitingTeam) {
-      fill(13, 128, 66);
+    for(PlayerPosition p : this.visitingTeam) {
+      if(!this.mouseOver(p))
+        fill(13, 128, 66);
+      else
+        fill(0, 0, 0);
       ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);
       
       fill(255);
@@ -240,8 +269,6 @@ public class BasketballCourt {
       textAlign(CENTER);
       text(p.getPlayer().getJerseyNumber(), p.getX()*ratio, (p.getY()+0.35)*ratio);
     }
-    
-    popMatrix();
   }
   
 }

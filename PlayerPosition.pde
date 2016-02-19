@@ -21,5 +21,5 @@ public class PlayerPosition {
   public float getY() {
     return this.y;
   }
-  
+    
 }
