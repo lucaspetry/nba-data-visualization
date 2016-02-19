@@ -4,7 +4,8 @@ HashMap<Integer, Team> TEAMS = new HashMap<Integer, Team>();
 HashMap<Integer, Game> GAMES = new HashMap<Integer, Game>();
 
 /** Global images **/
-PImage NBA_LOGO;
+PImage NBA_HEADER_50;
+PImage NBA_HEADER_100;
 
 /** Global colors **/
 color COLOR_BLUE1 = color(233, 242, 249);
@@ -13,10 +14,13 @@ color COLOR_BLUE3 = color(156, 196, 228);
 color COLOR_BLUE4 = color(27, 50, 95);
 
 color COLOR_RED1 = color(204, 42, 65);
-color COLOR_BACKGROUND = color(232, 202, 164);
+color COLOR_BACKGROUND = COLOR_BLUE3;//color(232, 202, 164);
 color COLOR_ORANGE1 = color(242, 108, 79);
 
 color COLOR_GRAY1 = color(81, 81, 81);
+
+color COLOR_NBA_BLUE = color(0, 116, 191);
+color COLOR_NBA_RED = color(239, 50, 78);
 
 /** Fonts **/
 PFont FONT_12;
@@ -48,8 +52,11 @@ final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
 Window CURRENT_WINDOW = new MainWindow();
+Window PREVIOUS_WINDOW = null;
 
 void SWITCH_WINDOW(Window window) {
+  if(window != PREVIOUS_WINDOW)
+    PREVIOUS_WINDOW = CURRENT_WINDOW;
   CURRENT_WINDOW.clearControls();
   CURRENT_WINDOW = window;
   CURRENT_WINDOW.setup();
@@ -94,8 +101,10 @@ void setup() {
 
 void loadGlobals() {
   // Load images
-  NBA_LOGO = loadImage("images/NBA.png");
-  NBA_LOGO.resize(34, 78);
+  NBA_HEADER_50 = loadImage("images/nba_header.jpg");
+  NBA_HEADER_50.resize(155, 50);
+  NBA_HEADER_100 = loadImage("images/nba_header.jpg");
+  NBA_HEADER_100.resize(309, 100);
   
   // Load fonts
   FONT_12 = createFont("Arial", 12, true);

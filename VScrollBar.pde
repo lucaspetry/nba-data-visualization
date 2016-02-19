@@ -73,7 +73,11 @@ public class VScrollBar extends Component {
             sliderPos += mouseY - pmouseY;
         }
         break;
-      default:
+      case MOUSE_WHEEL_UP:
+        sliderPos -= sliderHeight/5;
+        break;
+      case MOUSE_WHEEL_DOWN:
+        sliderPos += sliderHeight/5;
         break;
     }
     

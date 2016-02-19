@@ -79,7 +79,7 @@ public class PlayByPlayBox extends Component {
     public void mouseEvent(int eventType) {
       if(eventType == MOUSE_CLICKED && mouseOver) {
         if(this.framesAvailable) {
-          SWITCH_WINDOW(new EventWindow(CURRENT_WINDOW, this.gameEvent));
+          SWITCH_WINDOW(new EventWindow(this.gameEvent));
         }
       }
     }
@@ -105,11 +105,11 @@ public class PlayByPlayBox extends Component {
   private boolean currentColor;
   private Game game;
   
-  public PlayByPlayBox(Game game) {
+  public PlayByPlayBox(int boxWidth, int boxHeight, Game game) {
     this.currentColor = false;
     this.pbpRowHeight = 25;
-    this.boxHeight = 0;
-    this.boxWidth = 800;
+    this.boxHeight = boxHeight;
+    this.boxWidth = boxWidth;
     this.game = game;
   }
   

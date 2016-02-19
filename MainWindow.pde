@@ -18,15 +18,18 @@ public class MainWindow implements Window {
   public void draw() {
     background(COLOR_BACKGROUND);
 
-    fill(COLOR_RED1);
+    fill(COLOR_NBA_RED);
     rect(0, 0, WINDOW_WIDTH, 100);
     
-    image(NBA_LOGO, 10, 10);
+    fill(COLOR_NBA_BLUE);
+    rect(0, 0, 75, 100);
     
-    fill(255);
-    textFont(FONT_BOLD_28);
-    textAlign(LEFT);
-    text("2014-15 NBA Season", 65, 60);
+    image(NBA_HEADER_100, 50, 0);
+    
+    //fill(255);
+    //textFont(FONT_BOLD_28);
+    //textAlign(LEFT);
+    //text("2014-15 NBA Season", 65, 60);
     
     pushMatrix();
     translate(WINDOW_WIDTH - scrollBar.getWidth() - 50, 0);

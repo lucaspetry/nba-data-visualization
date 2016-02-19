@@ -4,15 +4,13 @@ public class EventWindow implements Window {
   private Button play;
   private Slider timeFrame;
   
-  private Window previousWindow;
   private GameEvent gameEvent;
   
   private BasketballCourt b;
   ArrayList<GameEventFrame> events;
   float currentEvent = 0;
 
-  public EventWindow(Window previousWindow, GameEvent gameEvent) {
-    this.previousWindow = previousWindow;
+  public EventWindow(GameEvent gameEvent) {
     this.gameEvent = gameEvent;
   }
 

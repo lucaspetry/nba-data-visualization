@@ -11,7 +11,7 @@ public class FileLoader {
   }
   
   public boolean gameEventExists(int gameId, int eventNumber) {
-    File file = new File(sketchPath("data\\games\\00" + gameId + "\\" + eventNumber + ".csv"));
+    File file = new File(sketchPath("data" + File.separator + "games" + File.separator + "00" + gameId + File.separator + eventNumber + ".csv"));
     return file.exists();
   }
   

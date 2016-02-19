@@ -221,12 +221,12 @@ public class BasketballCourt {
     if(eventType == MOUSE_CLICKED) {
       for(PlayerPosition p : homeTeam) {
         if(dist(mouseX, mouseY, x+p.getX()*ratio, y+p.getY()*ratio) < playerDiam*0.5)
-          SWITCH_WINDOW(new PlayerWindow(CURRENT_WINDOW, p.getPlayer()));
+          SWITCH_WINDOW(new PlayerWindow(p.getPlayer()));
       }
       
       for(PlayerPosition p : visitingTeam) {
         if(dist(mouseX, mouseY, x+p.getX()*ratio, y+p.getY()*ratio) < playerDiam*0.5)
-          SWITCH_WINDOW(new PlayerWindow(CURRENT_WINDOW, p.getPlayer()));
+          SWITCH_WINDOW(new PlayerWindow(p.getPlayer()));
       }
     }
   }
