@@ -3,6 +3,7 @@ public class EventWindow implements Window {
   private ControlP5 control;
   private Button play;
   private Slider timeFrame;
+  private WindowHeader header;
   
   private GameEvent gameEvent;
   
@@ -12,6 +13,7 @@ public class EventWindow implements Window {
 
   public EventWindow(GameEvent gameEvent) {
     this.gameEvent = gameEvent;
+    this.header = new WindowHeader();
   }
 
   public void setup() {
@@ -21,13 +23,13 @@ public class EventWindow implements Window {
     
     control = new ControlP5(WINDOW_APPLET);
     timeFrame = control.addSlider("events")
-          .setPosition(100, 20)
+          .setPosition(100, 70)
           .setSize(200,25)
           .setValue(0)
           .setRange(0, events.size() - 1);
     play = control.addButton("Play/Pause", "", "playback")
        .setValue(0)
-       .setPosition(20, 20)
+       .setPosition(20, 70)
        .setSize(70, 25);
   }
   
@@ -47,10 +49,13 @@ public class EventWindow implements Window {
     if(play.isOn()) {
       timeFrame.setValue((currentEvent+1)%events.size());
     }
+    
+    header.draw();
   }
   
   public void mouseEvent(int eventType) {
     b.mouseEvent(eventType);
+    header.mouseEvent(eventType);
   }
   
   public void event(ControlEvent event) {  

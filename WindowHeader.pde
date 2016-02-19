@@ -31,7 +31,7 @@ public class WindowHeader extends Component {
   
   public void mouseEvent(int eventType) {
     if(eventType == MOUSE_WHEEL_UP)
-      SWITCH_WINDOW(PREVIOUS_WINDOW);
+      SWITCH_WINDOW(PREVIOUS_WINDOW.get(PREVIOUS_WINDOW.size()-1));
   }
   
 }

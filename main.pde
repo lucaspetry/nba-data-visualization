@@ -52,11 +52,14 @@ final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
 Window CURRENT_WINDOW = new MainWindow();
-Window PREVIOUS_WINDOW = null;
+ArrayList<Window> PREVIOUS_WINDOW = new ArrayList<Window>(5);
 
 void SWITCH_WINDOW(Window window) {
-  if(window != PREVIOUS_WINDOW)
-    PREVIOUS_WINDOW = CURRENT_WINDOW;
+  if(window != PREVIOUS_WINDOW.get(PREVIOUS_WINDOW.size()-1))
+    PREVIOUS_WINDOW.add(CURRENT_WINDOW);
+  else
+    PREVIOUS_WINDOW.remove(PREVIOUS_WINDOW.size()-1);
+    
   CURRENT_WINDOW.clearControls();
   CURRENT_WINDOW = window;
   CURRENT_WINDOW.setup();
@@ -64,6 +67,7 @@ void SWITCH_WINDOW(Window window) {
 
 /** Setup and Draw Functions **/
 void setup() {
+  PREVIOUS_WINDOW.add(null);
   // Basic conf
   surface.setResizable(false);
   frameRate(60);
