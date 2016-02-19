@@ -21,6 +21,8 @@ color COLOR_GRAY1 = color(81, 81, 81);
 
 color COLOR_NBA_BLUE = color(0, 116, 191);
 color COLOR_NBA_RED = color(239, 50, 78);
+color COLOR_NBA_RED_HIGHLIGHT = color(213, 17, 47);
+color COLOR_NBA_RED_OVER = color(146, 12, 32);
 
 /** Fonts **/
 PFont FONT_12;
@@ -51,7 +53,8 @@ final int MOUSE_WHEEL_DOWN = 6;
 final int MAIN_WINDOW = 0;
 final int GAME_WINDOW = 1;
 
-Window CURRENT_WINDOW = new MainWindow();
+Window HOME_WINDOW = new MainWindow();
+Window CURRENT_WINDOW = HOME_WINDOW;
 ArrayList<Window> PREVIOUS_WINDOW = new ArrayList<Window>(5);
 
 void SWITCH_WINDOW(Window window) {
@@ -63,6 +66,12 @@ void SWITCH_WINDOW(Window window) {
   CURRENT_WINDOW.clearControls();
   CURRENT_WINDOW = window;
   CURRENT_WINDOW.setup();
+}
+
+void HOME_WINDOW() {
+  PREVIOUS_WINDOW.clear();
+  PREVIOUS_WINDOW.add(null);
+  SWITCH_WINDOW(HOME_WINDOW);
 }
 
 /** Setup and Draw Functions **/
