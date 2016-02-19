@@ -1,19 +1,27 @@
 public class GameWindow implements Window {
 
-  ControlP5 control;
-  Button play;
-  Slider timeFrame;
+  private ControlP5 control;
+  private Button play;
+  private Slider timeFrame;
   
-  BasketballCourt b;
+  private VScrollBar scrollBar;
+  private Component playByPlayBox;
+  private Game game;
+  
+  private BasketballCourt b;
   ArrayList<GameEventFrame> events;
   float currentEvent = 0;
 
   public GameWindow(Game game) {
+    this.game = game;
   }
 
   public void setup() {
-    b = new BasketballCourt(700, 400);
-    b.setup();
+    this.playByPlayBox = new PlayByPlayBox(this.game);
+    this.playByPlayBox.setup();
+    this.scrollBar = new VScrollBar(20, WINDOW_HEIGHT, this.playByPlayBox.getHeight());
+    this.b = new BasketballCourt(500, 400);
+    this.b.setup();
     events = new FileLoader().loadGameEventFrames(41400101, 2);
     
     control = new ControlP5(WINDOW_APPLET);
@@ -29,9 +37,17 @@ public class GameWindow implements Window {
   }
   
   public void draw() {
-    background(100);
+    background(COLOR_BACKGROUND);
     control.draw();
     b.draw();
+    
+    pushMatrix();
+    translate(WINDOW_WIDTH - scrollBar.getWidth(), 0);
+    scrollBar.update();
+    scrollBar.draw();
+    translate(-playByPlayBox.getWidth(), scrollBar.getPos());
+    playByPlayBox.draw();
+    popMatrix();
     
     GameEventFrame ge = events.get((int)currentEvent);
     ArrayList<PlayerPosition[]> teams = ge.getTeams();
@@ -44,22 +60,8 @@ public class GameWindow implements Window {
   }
   
   public void mouseEvent(int eventType) {
-    switch(eventType) {
-      case MOUSE_PRESSED:
-        break;
-      case MOUSE_RELEASED:
-        break;
-      case MOUSE_CLICKED:
-        break;
-      case MOUSE_MOVED:
-        break;
-      case MOUSE_DRAGGED:
-        break;
-      case MOUSE_WHEEL_UP:
-        break;
-      case MOUSE_WHEEL_DOWN:
-        break;
-    }
+    scrollBar.mouseEvent(eventType);
+    playByPlayBox.mouseEvent(eventType);
   }
   
   public void event(ControlEvent event) {  

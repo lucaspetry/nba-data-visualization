@@ -16,6 +16,9 @@ public class PlayByPlayBox extends Component {
       this.mouseOver = false;
       this.gameEvent = gameEvent;
       
+      if(!gameEvent.getScore().equals(""))
+        this.rowHeight *= 1.5;
+      
       if(currentColor)
         this.background = COLOR_BLUE1;
       else
@@ -40,7 +43,23 @@ public class PlayByPlayBox extends Component {
       fill(COLOR_GRAY1);
       textFont(FONT_12);
       textAlign(CENTER);
-      //text(game.getDate(), 50, this.rowHeight/2);
+      text("Q" + gameEvent.getPeriod(), 15, this.rowHeight*1.25/2);
+      
+      int clockCenter = this.rowWidth/2;
+      
+      if(gameEvent.getScore().equals("")) {
+        text(gameEvent.getClock(), clockCenter, this.rowHeight*1.25/2);
+        textFont(FONT_12);
+      } else {
+        text(gameEvent.getClock(), clockCenter, this.rowHeight*0.80/2);
+        textFont(FONT_BOLD_12);
+        text(gameEvent.getScore(), clockCenter, this.rowHeight*1.70/2);
+      }
+      
+      textAlign(LEFT);
+      text(gameEvent.getHomeDescription(), clockCenter + 35, this.rowHeight*1.25/2);
+      textAlign(RIGHT);
+      text(gameEvent.getVisitorDescription(), clockCenter - 35, this.rowHeight*1.25/2);
       
       //int scoreCenter = 240;
       
@@ -87,21 +106,26 @@ public class PlayByPlayBox extends Component {
   private int pbpRowHeight;
   private ArrayList<PBPRow> rows;
   private boolean currentColor;
+  private Game game;
   
-  public PlayByPlayBox() {
+  public PlayByPlayBox(Game game) {
     this.currentColor = false;
-    this.pbpRowHeight = 60;
-    this.boxHeight = GAMES.size() * this.pbpRowHeight;
-    this.boxWidth = 400;
+    this.pbpRowHeight = 25;
+    this.boxHeight = 0;
+    this.boxWidth = 800;
+    this.game = game;
   }
   
   public void setup() {
-    this.rows = new ArrayList<PBPRow>(GAMES.size());
+    ArrayList<GameEvent> events = new FileLoader().loadGameEvents(this.game.getId());
     
-    for(int gameId : GAMES.keySet()) {
-      PBPRow newRow = new PBPRow(this.boxWidth, this.pbpRowHeight, null); // TODO
+    this.rows = new ArrayList<PBPRow>(events.size());
+    
+    for(GameEvent event : events) {
+      PBPRow newRow = new PBPRow(this.boxWidth, this.pbpRowHeight, event);
       newRow.setup();
       rows.add(newRow);
+      this.boxHeight += newRow.getHeight();
     }
   }
   
@@ -122,7 +146,7 @@ public class PlayByPlayBox extends Component {
     return this.boxWidth;
   }
   
-  public void mouseEvent(int eventType) {
+  public void mouseEvent(int eventType) {    
     for(PBPRow r : rows)
       r.mouseEvent(eventType);
   }

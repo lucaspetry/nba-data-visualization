@@ -44,14 +44,14 @@ public class GamesBox extends Component {
       
       int scoreCenter = 240;
       
-      image(game.getHomeTeam().getLogo(), scoreCenter - 135, 2, 68, 55);
-      image(game.getVisitorTeam().getLogo(), scoreCenter + 135 - 68, 2, 68, 55);
+      image(game.getVisitorTeam().getLogo(), scoreCenter - 135, 2, 68, 55);
+      image(game.getHomeTeam().getLogo(), scoreCenter + 135 - 68, 2, 68, 55);
       
       textFont(FONT_BOLD_24);
       text("X", scoreCenter, this.rowHeight/2+6);
       textFont(FONT_20);
-      text(game.getHomeScore(), scoreCenter - 35, this.rowHeight/2+5);
-      text(game.getVisitorScore(), scoreCenter + 35, this.rowHeight/2+5);
+      text(game.getVisitorScore(), scoreCenter - 35, this.rowHeight/2+5);
+      text(game.getHomeScore(), scoreCenter + 35, this.rowHeight/2+5);
     }
     
     public int getHeight() {

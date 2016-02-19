@@ -1,10 +1,13 @@
 public class Player {
   
+  private final static String playerPrefix = "images/players/";
+  private final static String playerSufix = ".png";
   private int id;
   private String firstName;
   private String lastName;
   private int jerseyNumber;
   private String position;
+  private PImage photo;
   
   public Player(int id, String firstName, String lastName,
                 int jerseyNumber, String position) {
@@ -13,6 +16,7 @@ public class Player {
     this.lastName = lastName;
     this.jerseyNumber = jerseyNumber;
     this.position = position;
+    this.photo = loadImage(playerPrefix + this.id + playerSufix);
   }
   
   public int getId() {
@@ -29,6 +33,10 @@ public class Player {
   
   public String getPosition() {
     return this.position;
+  }
+  
+  public PImage getPhoto() {
+    return this.photo;
   }
   
 }
