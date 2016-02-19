@@ -3,26 +3,24 @@ public class GameEventFrame {
   private int moment;
   private float gameClock;
   private float shotClock;
-  private int period;
   private float[] ball; // x, y, height
-  private PlayerPosition[] playersA;
-  private PlayerPosition[] playersB;
+  private PlayerPosition[] homePlayers;
+  private PlayerPosition[] visitorPlayers;
   
-  public GameEventFrame(int moment, float gameClock, float shotClock, int period,
-                    float[] ball, PlayerPosition[] playersA, PlayerPosition[] playersB) {
+  public GameEventFrame(int moment, float gameClock, float shotClock,
+                    float[] ball, PlayerPosition[] homePlayers, PlayerPosition[] visitorPlayers) {
     this.moment = moment;
     this.gameClock = gameClock;
     this.shotClock = shotClock;
-    this.period = period;
     this.ball = new float[] {ball[0], ball[1], ball[2]};
-    this.playersA = new PlayerPosition[]{playersA[0], playersA[1], playersA[2], playersA[3], playersA[4]};
-    this.playersB = new PlayerPosition[]{playersB[0], playersB[1], playersB[2], playersB[3], playersB[4]};
+    this.homePlayers = new PlayerPosition[]{homePlayers[0], homePlayers[1], homePlayers[2], homePlayers[3], homePlayers[4]};
+    this.visitorPlayers = new PlayerPosition[]{visitorPlayers[0], visitorPlayers[1], visitorPlayers[2], visitorPlayers[3], visitorPlayers[4]};
   }
   
   public ArrayList<PlayerPosition[]> getTeams() {
     ArrayList<PlayerPosition[]> teams = new ArrayList<PlayerPosition[]>(2);
-    teams.add(playersA);
-    teams.add(playersB);
+    teams.add(homePlayers);
+    teams.add(visitorPlayers);
     return teams;
   }
   
