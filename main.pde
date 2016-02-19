@@ -32,8 +32,10 @@ PFont FONT_20;
 
 PFont FONT_BOLD_12;
 PFont FONT_BOLD_14;
+PFont FONT_BOLD_19;
 PFont FONT_BOLD_24;
 PFont FONT_BOLD_28;
+PFont FONT_BOLD_36;
 
 /** Window **/
 final int WINDOW_WIDTH = 1100;
@@ -126,8 +128,10 @@ void loadGlobals() {
   FONT_20 = createFont("Arial", 20, true);
   FONT_BOLD_12 = createFont("Arial Bold", 12, true);
   FONT_BOLD_14 = createFont("Arial Bold", 14, true);
+  FONT_BOLD_19 = createFont("Arial Bold", 19, true);
   FONT_BOLD_24 = createFont("Arial Bold", 24, true);
   FONT_BOLD_28 = createFont("Arial Bold", 28, true);
+  FONT_BOLD_36 = createFont("Arial Bold", 36, true);
 
   // Load games, teams and players
   FileLoader f = new FileLoader();

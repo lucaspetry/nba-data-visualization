@@ -27,8 +27,36 @@ public class GameWindow implements Window {
     playByPlayBox.draw();
     popMatrix();
     
-    fill(COLOR_RED1);
-    rect(WINDOW_WIDTH-playByPlayBox.getWidth()-scrollBar.getWidth(), header.getHeight(), playByPlayBox.getWidth()+scrollBar.getWidth(), 100);
+    int scoreCenter = playByPlayBox.getWidth()/2;
+      
+      
+    pushMatrix();
+    translate(WINDOW_WIDTH-playByPlayBox.getWidth()-scrollBar.getWidth(), header.getHeight());
+    fill(COLOR_BLUE2);
+    rect(0, 0, playByPlayBox.getWidth()+scrollBar.getWidth(), 100);
+    
+    fill(COLOR_GRAY1);
+    textAlign(CENTER);
+    textFont(FONT_BOLD_28);
+    text("X", scoreCenter, 60);
+    textFont(FONT_16);
+    text(game.getDate(), scoreCenter, 90);
+    textFont(FONT_BOLD_36);
+    textAlign(RIGHT);
+    text(game.getVisitorScore(), scoreCenter - 20, 62);
+    textAlign(LEFT);
+    text(game.getHomeScore(), scoreCenter + 20, 62);
+    
+    image(game.getVisitorTeam().getLogo(), scoreCenter - 385, 15, 80, 64);
+    image(game.getHomeTeam().getLogo(), scoreCenter + 385 - 80, 15, 80, 64);
+    
+    textFont(FONT_BOLD_19);
+    textAlign(RIGHT);
+    text(game.getVisitorTeam().getName(), scoreCenter - 90, 56);
+    textAlign(LEFT);
+    text(game.getHomeTeam().getName(), scoreCenter + 90, 56);
+    popMatrix();
+    
     header.draw();
   }
   
