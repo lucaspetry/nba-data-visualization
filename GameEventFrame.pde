@@ -17,11 +17,12 @@ public class GameEventFrame {
     this.visitorPlayers = new PlayerPosition[]{visitorPlayers[0], visitorPlayers[1], visitorPlayers[2], visitorPlayers[3], visitorPlayers[4]};
   }
   
-  public ArrayList<PlayerPosition[]> getTeams() {
-    ArrayList<PlayerPosition[]> teams = new ArrayList<PlayerPosition[]>(2);
-    teams.add(homePlayers);
-    teams.add(visitorPlayers);
-    return teams;
+  public PlayerPosition[] getHomeTeam() {
+    return this.homePlayers;
+  }
+  
+  public PlayerPosition[] getVisitorTeam() {
+    return this.visitorPlayers;
   }
   
   public float[] getBall() {

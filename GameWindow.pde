@@ -7,7 +7,8 @@ public class GameWindow implements Window {
   
   public GameWindow(Game game) {
     this.game = game;
-    this.header = new WindowHeader();
+    this.header = new WindowHeader("Game: " + game.getDate() + " - " + game.getVisitorTeam().getAbbreviation()
+                                  + " " + game.getVisitorScore() + " x " + game.getHomeScore() + game.getHomeTeam().getAbbreviation());
   }
 
   public void setup() {

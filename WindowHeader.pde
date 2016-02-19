@@ -10,8 +10,9 @@ public class WindowHeader extends Component {
   private int backBtnX;
   private boolean overHomeBtn;
   private boolean overBackBtn;
+  private String title;
   
-  public WindowHeader() {
+  public WindowHeader(String title) {
     this.headerWidth = WINDOW_WIDTH;
     this.headerHeight = 50;
     this.buttonsWidth = 75;
@@ -21,12 +22,14 @@ public class WindowHeader extends Component {
     this.buttonsY = 5;
     this.overHomeBtn = false;
     this.overBackBtn = false;
+    this.title = title;
   }
   
   public void setup() {
   }
   
   public void draw() {
+    noStroke();
     this.mouseOverButtons();    
     fill(COLOR_NBA_RED);
     rect(0, 0, WINDOW_WIDTH, headerHeight);
@@ -35,6 +38,11 @@ public class WindowHeader extends Component {
     rect(0, 0, 75, headerHeight);
     
     image(NBA_HEADER, 30, 0);
+    
+    fill(255);
+    textAlign(LEFT);
+    textFont(FONT_BOLD_16);
+    text(this.title, 190, buttonsY+5+buttonsHeight/2); 
     
     pushMatrix();
     this.drawButtons();

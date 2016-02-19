@@ -1,19 +1,22 @@
 public class EventWindow implements Window {
 
   private ControlP5 control;
-  private Button play;
+  private Button playPause;
+  private Button stop;
   private Slider timeFrame;
   private WindowHeader header;
   
   private GameEvent gameEvent;
   
   private BasketballCourt b;
-  ArrayList<GameEventFrame> events;
-  float currentEvent = 0;
+  private ArrayList<GameEventFrame> events;
+  private float currentEvent = 0;
+  private boolean playing;
 
   public EventWindow(GameEvent gameEvent) {
-    this.header = new WindowHeader();
+    this.header = new WindowHeader("Event: " + gameEvent.getHomeDescription() + gameEvent.getVisitorDescription());
     this.gameEvent = gameEvent;
+    this.playing = false;
   }
 
   public void setup() {
@@ -22,15 +25,19 @@ public class EventWindow implements Window {
     events = this.gameEvent.getEventFrames();
     
     control = new ControlP5(WINDOW_APPLET);
-    timeFrame = control.addSlider("events")
-          .setPosition(100, 70)
-          .setSize(200,25)
+    timeFrame = control.addSlider("events", "", "")
+          .setPosition(120, 70)
+          .setSize(400,25)
           .setValue(0)
           .setRange(0, events.size() - 1);
-    play = control.addButton("Play/Pause", "", "playback")
+    playPause = control.addButton("playback", "", "play")
        .setValue(0)
        .setPosition(20, 70)
-       .setSize(70, 25);
+       .setSize(40, 25);
+    stop = control.addButton("stop", "", "stop")
+       .setValue(0)
+       .setPosition(70, 70)
+       .setSize(40, 25);
   }
   
   public void draw() {
@@ -38,15 +45,18 @@ public class EventWindow implements Window {
     control.draw();
     
     pushMatrix();
-    translate(50, 150);
+    translate(20, 105);
+    fill(100);
+    rect(0, 0, b.getWidth() + 60, b.getHeight() + 60);
+    translate(30, 30);
     b.draw();
+    
     GameEventFrame ge = events.get((int)currentEvent);
-    ArrayList<PlayerPosition[]> teams = ge.getTeams();
-    b.drawPlayersAndBall(teams.get(0), teams.get(1), ge.getBall());
+    b.drawPlayersAndBall(ge.getHomeTeam(), ge.getVisitorTeam(), ge.getBall());
     popMatrix();
     
-    // Draw players
-    if(play.isOn()) {
+    // If play is on, move to next frame
+    if(playing) {
       timeFrame.setValue((currentEvent+1)%events.size());
     }
     
@@ -59,8 +69,17 @@ public class EventWindow implements Window {
   }
   
   public void event(ControlEvent event) {  
-    if(event.isFrom(control.getController("events"))) {
-      currentEvent = control.getController("events").getValue();
+    if(event.isFrom(timeFrame)) {
+      currentEvent = timeFrame.getValue();
+    } else if(event.isFrom(playPause)) {
+      playing = !playing;
+      if(playing)
+        playPause.setLabel("pause");
+      else
+        playPause.setLabel("play");
+    } else if(event.isFrom(stop)) {
+      playing = false;
+      timeFrame.setValue(0);
     }
   }
   

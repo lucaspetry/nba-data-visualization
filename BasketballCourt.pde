@@ -49,6 +49,14 @@ public class BasketballCourt {
     init(min(cLength/nbaLength, cWidth/nbaWidth));
   }
   
+  public float getHeight() {
+    return this.courtWidth;
+  }
+  
+  public float getWidth() {
+    return this.courtLength;
+  }
+  
   private void init(float ratio) {
     this.x = (int) modelX(0, 0, 0);
     this.y = (int) modelY(0, 0, 0);

@@ -35,4 +35,8 @@ public class Team {
     return this.logo;
   }
   
+  public int[] getGamesWinsLosses() {
+    return new FileLoader().getGamesWinsLosses(this.id);
+  }
+  
 }

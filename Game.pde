@@ -32,6 +32,14 @@ public class Game {
     return this.visitorTeam;
   }
   
+  public Team getWinner() {
+    if(this.homeScore > this.visitorScore)
+      return this.homeTeam;
+    else if(this.homeScore < this.visitorScore)
+      return this.visitorTeam;
+    return null;
+  }
+  
   public int getHomeScore() {
     return this.homeScore;
   }

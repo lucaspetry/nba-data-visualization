@@ -14,7 +14,7 @@ color COLOR_BLUE3 = color(156, 196, 228);
 color COLOR_BLUE4 = color(27, 50, 95);
 
 color COLOR_RED1 = color(204, 42, 65);
-color COLOR_BACKGROUND = COLOR_BLUE3;//color(232, 202, 164);
+color COLOR_BACKGROUND = COLOR_BLUE3;//color(120, 49, 19);
 color COLOR_ORANGE1 = color(242, 108, 79);
 
 color COLOR_GRAY1 = color(81, 81, 81);
@@ -32,6 +32,7 @@ PFont FONT_20;
 
 PFont FONT_BOLD_12;
 PFont FONT_BOLD_14;
+PFont FONT_BOLD_16;
 PFont FONT_BOLD_19;
 PFont FONT_BOLD_24;
 PFont FONT_BOLD_28;
@@ -86,6 +87,7 @@ void setup() {
   size(1100, 700, P2D);
   
   this.loadGlobals();
+  SWITCH_WINDOW(new EventWindow(new FileLoader().loadGameEvents(41400101).get(2)));
   
   // Setup current window
   CURRENT_WINDOW.setup();
@@ -128,6 +130,7 @@ void loadGlobals() {
   FONT_20 = createFont("Arial", 20, true);
   FONT_BOLD_12 = createFont("Arial Bold", 12, true);
   FONT_BOLD_14 = createFont("Arial Bold", 14, true);
+  FONT_BOLD_16 = createFont("Arial Bold", 16, true);
   FONT_BOLD_19 = createFont("Arial Bold", 19, true);
   FONT_BOLD_24 = createFont("Arial Bold", 24, true);
   FONT_BOLD_28 = createFont("Arial Bold", 28, true);

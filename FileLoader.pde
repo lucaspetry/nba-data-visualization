@@ -10,6 +10,23 @@ public class FileLoader {
     this.gamesFile = "data2/games.csv";
   }
   
+  public int[] getGamesWinsLosses(int teamId) {
+    int[] gwl = new int[] {0, 0, 0};
+    for(int gameId : GAMES.keySet()) {
+      Game g = GAMES.get(gameId);
+      if(g.getHomeTeam().getId() == teamId ||
+          g.getVisitorTeam().getId() == teamId) {
+        gwl[0]++;
+        
+        if(g.getWinner().getId() == teamId)
+          gwl[1]++;
+        else if(g.getWinner() != null)
+          gwl[2]++;
+      }
+    }
+    return gwl;
+  }
+  
   public boolean gameEventExists(int gameId, int eventNumber) {
     File file = new File(sketchPath("data" + File.separator + "games" + File.separator + "00" + gameId + File.separator + eventNumber + ".csv"));
     return file.exists();
@@ -96,7 +113,7 @@ public class FileLoader {
     
     for(TableRow r : table.rows()) {
       int id = r.getInt("playerid");
-      PLAYERS.put(id, new Player(id, r.getString("firstname"),
+      PLAYERS.put(id, new Player(id, r.getInt("teamid"), r.getString("firstname"),
                   r.getString("lastname"), r.getInt("jerseynumber"),
                   r.getString("position")));
     }
