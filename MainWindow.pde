@@ -16,8 +16,10 @@ public class MainWindow implements Window {
   }
   
   public void draw() {
-    pushMatrix();
-    background(COLOR_RED1);
+    background(COLOR_BACKGROUND);
+        
+    fill(COLOR_RED1);
+    rect(0, 0, WINDOW_WIDTH, 100);
     
     image(NBA_LOGO, 10, 10);
     
@@ -26,15 +28,13 @@ public class MainWindow implements Window {
     textAlign(LEFT);
     text("2014-15 NBA Season", 65, 60);
     
-    fill(COLOR_BACKGROUND);
-    rect(0, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
-    
+    pushMatrix();
     translate(WINDOW_WIDTH - scrollBar.getWidth() - 50, 0);
     scrollBar.update();
     scrollBar.draw();
     translate(-gamesBox.getWidth(), scrollBar.getPos());
     gamesBox.draw();
-    popMatrix();
+    popMatrix();    
   }
     
   public void mouseEvent(int eventType) {

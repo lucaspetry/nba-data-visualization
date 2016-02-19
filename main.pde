@@ -29,7 +29,7 @@ PFont FONT_BOLD_24;
 PFont FONT_BOLD_28;
 
 /** Window **/
-final int WINDOW_WIDTH = 900;
+final int WINDOW_WIDTH = 1000;
 final int WINDOW_HEIGHT = 600;
 final PApplet WINDOW_APPLET = this;
 
@@ -58,7 +58,7 @@ void SWITCH_WINDOW(Window window) {
 void setup() {
   // Basic conf
   frameRate(60);
-  size(900, 600, P2D);
+  size(1000, 600, P2D);
   
   this.loadGlobals();
   
