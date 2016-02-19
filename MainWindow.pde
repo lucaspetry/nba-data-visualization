@@ -17,7 +17,7 @@ public class MainWindow implements Window {
   
   public void draw() {
     background(COLOR_BACKGROUND);
-        
+
     fill(COLOR_RED1);
     rect(0, 0, WINDOW_WIDTH, 100);
     
@@ -34,7 +34,7 @@ public class MainWindow implements Window {
     scrollBar.draw();
     translate(-gamesBox.getWidth(), scrollBar.getPos());
     gamesBox.draw();
-    popMatrix();    
+    popMatrix();
   }
     
   public void mouseEvent(int eventType) {

@@ -10,7 +10,7 @@ public class GameWindow implements Window {
 
   public GameWindow(Game game) {
   }
-  
+
   public void setup() {
     b = new BasketballCourt(700, 400);
     b.setup();

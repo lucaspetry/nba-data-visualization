@@ -64,7 +64,7 @@ public class BasketballCourt {
     backboardWidth = 6 * ratio;
     backboardOffX = 4 * ratio;
     
-    playerDiam = 2*ratio;
+    playerDiam = 2.5*ratio;
     ballDiam = playerDiam*0.6;
   }
   
@@ -220,15 +220,25 @@ public class BasketballCourt {
     ellipse(ball[0]*ratio, ball[1]*ratio, newBallDiam, newBallDiam);   
     
     // Home team
-    fill(255, 0, 0);
     for(PlayerPosition p : homeTeam) {
-      ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);      
+      fill(255, 0, 0);
+      ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);
+      
+      fill(255);
+      textFont(FONT_12);
+      textAlign(CENTER);
+      text(p.getPlayer().getJerseyNumber(), p.getX()*ratio, (p.getY()+0.35)*ratio);
     }
     
     // Visiting teams
-    fill(13, 128, 66);
     for(PlayerPosition p : visitingTeam) {
-      ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);      
+      fill(13, 128, 66);
+      ellipse(p.getX()*ratio, p.getY()*ratio, playerDiam, playerDiam);
+      
+      fill(255);
+      textFont(FONT_12);
+      textAlign(CENTER);
+      text(p.getPlayer().getJerseyNumber(), p.getX()*ratio, (p.getY()+0.35)*ratio);
     }
     
     popMatrix();

@@ -10,8 +10,8 @@ public class PlayerPosition {
     this.y = y;
   }
   
-  public int getPlayerId() {
-    return player.getId();
+  public Player getPlayer() {
+    return this.player;
   }
   
   public float getX() {
