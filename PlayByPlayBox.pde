@@ -9,12 +9,14 @@ public class PlayByPlayBox extends Component {
     private boolean mouseOver;
     private GameEvent gameEvent;
     private color background;
+    private boolean framesAvailable;
     
     public PBPRow(int rowWidth, int rowHeight, GameEvent gameEvent) {
       this.rowWidth = rowWidth;
       this.rowHeight = rowHeight;
       this.mouseOver = false;
       this.gameEvent = gameEvent;
+      this.framesAvailable = gameEvent.areFramesAvailable();
       
       if(!gameEvent.getScore().equals(""))
         this.rowHeight *= 1.5;
@@ -34,13 +36,17 @@ public class PlayByPlayBox extends Component {
       this.mouseOver();
       
       if(mouseOver) {
-        fill(COLOR_BLUE3);
+          fill(COLOR_BLUE3);    
       } else {
         fill(this.background);
       }
       rect(0, 0, this.rowWidth, this.rowHeight);
       
-      fill(COLOR_GRAY1);
+      if(framesAvailable)
+        fill(COLOR_GRAY1);
+      else
+        fill(COLOR_RED1);
+        
       textFont(FONT_12);
       textAlign(CENTER);
       text("Q" + gameEvent.getPeriod(), 15, this.rowHeight*1.25/2);
@@ -60,17 +66,6 @@ public class PlayByPlayBox extends Component {
       text(gameEvent.getHomeDescription(), clockCenter + 35, this.rowHeight*1.25/2);
       textAlign(RIGHT);
       text(gameEvent.getVisitorDescription(), clockCenter - 35, this.rowHeight*1.25/2);
-      
-      //int scoreCenter = 240;
-      
-      //image(game.getHomeTeam().getLogo(), scoreCenter - 135, 2, 68, 55);
-      //image(game.getVisitorTeam().getLogo(), scoreCenter + 135 - 68, 2, 68, 55);
-      
-      //textFont(FONT_BOLD_24);
-      //text("X", scoreCenter, this.rowHeight/2+6);
-      //textFont(FONT_20);
-      //text(game.getHomeScore(), scoreCenter - 35, this.rowHeight/2+5);
-      //text(game.getVisitorScore(), scoreCenter + 35, this.rowHeight/2+5);
     }
     
     public int getHeight() {
@@ -83,7 +78,9 @@ public class PlayByPlayBox extends Component {
     
     public void mouseEvent(int eventType) {
       if(eventType == MOUSE_CLICKED && mouseOver) {
-        // Open event
+        if(this.framesAvailable) {
+          SWITCH_WINDOW(new EventWindow(CURRENT_WINDOW, this.gameEvent));
+        }
       }
     }
     

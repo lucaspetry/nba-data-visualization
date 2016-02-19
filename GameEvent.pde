@@ -45,6 +45,10 @@ public class GameEvent {
     return this.visitorDescription;
   }
   
+  public boolean areFramesAvailable() {
+    return new FileLoader().gameEventExists(this.gameId, this.eventNumber);
+  }
+  
   public ArrayList<GameEventFrame> getEventFrames() {
     return new FileLoader().loadGameEventFrames(this.gameId, this.eventNumber);
   }

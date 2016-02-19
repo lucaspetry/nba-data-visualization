@@ -64,7 +64,7 @@ public class GamesBox extends Component {
     
     public void mouseEvent(int eventType) {
       if(eventType == MOUSE_CLICKED && mouseOver) {
-        SWITCH_WINDOW(new GameWindow(this.game));
+        SWITCH_WINDOW(new GameWindow(CURRENT_WINDOW, this.game));
       }
     }
     

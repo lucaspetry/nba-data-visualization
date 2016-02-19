@@ -10,6 +10,11 @@ public class FileLoader {
     this.gamesFile = "data2/games.csv";
   }
   
+  public boolean gameEventExists(int gameId, int eventNumber) {
+    File file = new File(sketchPath("data\\games\\00" + gameId + "\\" + eventNumber + ".csv"));
+    return file.exists();
+  }
+  
   public ArrayList<GameEvent> loadGameEvents(int gameId) {
     JSONObject json = loadJSONObject("data2/playbyplay/00" + gameId + ".json");
     JSONArray rowSet = json.getJSONArray("resultSets")
