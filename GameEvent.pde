@@ -6,18 +6,16 @@ public class GameEvent {
   private String periodClock;
   private String score;
   private String homeDescription;
-  private String neutralDescription;
   private String visitorDescription;
   
   public GameEvent(int gameId, int eventNumber, int period, String periodClock, String score,
-                    String homeDescription, String neutralDescription, String visitorDescription) {
+                    String homeDescription, String visitorDescription) {
     this.gameId = gameId;
     this.eventNumber = eventNumber;
     this.period = period;
     this.periodClock = periodClock;
     this.score = score;
     this.homeDescription = homeDescription;
-    this.neutralDescription = neutralDescription;
     this.visitorDescription = visitorDescription;
   }
   
@@ -35,10 +33,6 @@ public class GameEvent {
   
   public String getHomeDescription() {
     return this.homeDescription;
-  }
-  
-  public String getNeutralDescription() {
-    return this.neutralDescription;
   }
   
   public String getVisitorDescription() {

@@ -12,8 +12,8 @@ public class EventWindow implements Window {
   float currentEvent = 0;
 
   public EventWindow(GameEvent gameEvent) {
-    this.gameEvent = gameEvent;
     this.header = new WindowHeader();
+    this.gameEvent = gameEvent;
   }
 
   public void setup() {

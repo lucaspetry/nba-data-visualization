@@ -16,15 +16,12 @@ public class MainWindow implements Window {
   }
   
   public void draw() {
-    background(COLOR_BACKGROUND);
+    background(COLOR_NBA_BLUE);
 
     fill(COLOR_NBA_RED);
-    rect(0, 0, WINDOW_WIDTH, 100);
-    
-    fill(COLOR_NBA_BLUE);
-    rect(0, 0, 75, 100);
-    
-    image(NBA_HEADER_100, 50, 0);
+    rect(429, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            
+    image(NBA_MAIN, 50, WINDOW_HEIGHT-284);
     
     //fill(255);
     //textFont(FONT_BOLD_28);

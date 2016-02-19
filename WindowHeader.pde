@@ -16,7 +16,7 @@ public class WindowHeader extends Component {
     this.headerHeight = 50;
     this.buttonsWidth = 75;
     this.buttonsHeight = 40;
-    this.homeBtnX = 185;
+    this.homeBtnX = WINDOW_WIDTH - 180;
     this.backBtnX = homeBtnX + buttonsWidth + 10;
     this.buttonsY = 5;
     this.overHomeBtn = false;
@@ -34,7 +34,7 @@ public class WindowHeader extends Component {
     fill(COLOR_NBA_BLUE);
     rect(0, 0, 75, headerHeight);
     
-    image(NBA_HEADER_50, 30, 0);
+    image(NBA_HEADER, 30, 0);
     
     pushMatrix();
     this.drawButtons();
@@ -54,7 +54,7 @@ public class WindowHeader extends Component {
       if(overHomeBtn)
         HOME_WINDOW();
       else if(overBackBtn)
-        SWITCH_WINDOW(PREVIOUS_WINDOW.get(PREVIOUS_WINDOW.size()-1));
+        SWITCH_WINDOW(null);
     }
   }
   

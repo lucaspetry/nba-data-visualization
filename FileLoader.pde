@@ -26,21 +26,18 @@ public class FileLoader {
       JSONArray r = rowSet.getJSONArray(i);
       
       String homeDescription = "";
-      String neutralDescription = "";
       String visitorDescription = "";
       String score = "";
       
       if(!r.isNull(7))
         homeDescription = r.getString(7);
-      if(!r.isNull(8))
-        neutralDescription = r.getString(8);
       if(!r.isNull(9))
         visitorDescription = r.getString(9);
       if(!r.isNull(10))
         score = r.getString(10);
       
       events.add(new GameEvent(gameId, r.getInt(1), r.getInt(4), r.getString(6), score,
-                    homeDescription, neutralDescription, visitorDescription));
+                    homeDescription, visitorDescription));
     }
     
     return events;

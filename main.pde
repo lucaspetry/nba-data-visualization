@@ -4,8 +4,8 @@ HashMap<Integer, Team> TEAMS = new HashMap<Integer, Team>();
 HashMap<Integer, Game> GAMES = new HashMap<Integer, Game>();
 
 /** Global images **/
-PImage NBA_HEADER_50;
-PImage NBA_HEADER_100;
+PImage NBA_HEADER;
+PImage NBA_MAIN;
 
 /** Global colors **/
 color COLOR_BLUE1 = color(233, 242, 249);
@@ -58,13 +58,14 @@ Window CURRENT_WINDOW = HOME_WINDOW;
 ArrayList<Window> PREVIOUS_WINDOW = new ArrayList<Window>(5);
 
 void SWITCH_WINDOW(Window window) {
-  if(window != PREVIOUS_WINDOW.get(PREVIOUS_WINDOW.size()-1))
+  Window newWindow = window;
+  if(window != null)
     PREVIOUS_WINDOW.add(CURRENT_WINDOW);
   else
-    PREVIOUS_WINDOW.remove(PREVIOUS_WINDOW.size()-1);
+    newWindow = PREVIOUS_WINDOW.remove(PREVIOUS_WINDOW.size()-1);
     
   CURRENT_WINDOW.clearControls();
-  CURRENT_WINDOW = window;
+  CURRENT_WINDOW = newWindow;
   CURRENT_WINDOW.setup();
 }
 
@@ -78,7 +79,7 @@ void HOME_WINDOW() {
 void setup() {
   PREVIOUS_WINDOW.add(null);
   // Basic conf
-  surface.setResizable(false);
+  surface.setTitle("2014-15 NBA Season Data Visualization");
   frameRate(60);
   size(1100, 700, P2D);
   
@@ -114,10 +115,9 @@ void setup() {
 
 void loadGlobals() {
   // Load images
-  NBA_HEADER_50 = loadImage("images/nba_header.jpg");
-  NBA_HEADER_50.resize(155, 50);
-  NBA_HEADER_100 = loadImage("images/nba_header.jpg");
-  NBA_HEADER_100.resize(309, 100);
+  NBA_HEADER = loadImage("images/nba_header.jpg");
+  NBA_HEADER.resize(155, 50);
+  NBA_MAIN = loadImage("images/nba_main.jpg");
   
   // Load fonts
   FONT_12 = createFont("Arial", 12, true);
@@ -135,6 +135,8 @@ void loadGlobals() {
 }
 
 void draw() {
+  fill(COLOR_BACKGROUND);
+  rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   CURRENT_WINDOW.draw();
 }
 
