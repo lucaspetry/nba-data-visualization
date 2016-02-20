@@ -17,6 +17,14 @@ public class GameEventFrame {
     this.visitorPlayers = new PlayerPosition[]{visitorPlayers[0], visitorPlayers[1], visitorPlayers[2], visitorPlayers[3], visitorPlayers[4]};
   }
   
+  public float getGameClock() {
+    return this.gameClock;
+  }
+  
+  public float getShotClock() {
+    return this.shotClock;
+  }
+  
   public PlayerPosition[] getHomeTeam() {
     return this.homePlayers;
   }

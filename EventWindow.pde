@@ -27,7 +27,7 @@ public class EventWindow implements Window {
     control = new ControlP5(WINDOW_APPLET);
     timeFrame = control.addSlider("events", "", "")
           .setPosition(120, 70)
-          .setSize(400,25)
+          .setSize(350,25)
           .setValue(0)
           .setRange(0, events.size() - 1);
     playPause = control.addButton("playback", "", "play")
@@ -42,17 +42,26 @@ public class EventWindow implements Window {
   
   public void draw() {
     background(COLOR_BACKGROUND);
+    GameEventFrame ge = events.get((int)currentEvent);
+    
     control.draw();
+    
+    fill(COLOR_GRAY1);
+    textAlign(LEFT);
+    textFont(FONT_BOLD_14);
+    text("Game Clock: " + ge.getGameClock(), 485, 87);
+    text("Shot Clock: " + ge.getShotClock(), 635, 87);
     
     pushMatrix();
     translate(20, 105);
-    fill(100);
+    fill(120);
     rect(0, 0, b.getWidth() + 60, b.getHeight() + 60);
     translate(30, 30);
     b.draw();
     
-    GameEventFrame ge = events.get((int)currentEvent);
     b.drawPlayersAndBall(ge.getHomeTeam(), ge.getVisitorTeam(), ge.getBall());
+    
+    
     popMatrix();
     
     // If play is on, move to next frame

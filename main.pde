@@ -24,6 +24,8 @@ color COLOR_NBA_RED = color(239, 50, 78);
 color COLOR_NBA_RED_HIGHLIGHT = color(213, 17, 47);
 color COLOR_NBA_RED_OVER = color(146, 12, 32);
 
+color COLOR_COURT_BLUE = color(63, 128, 182);
+
 /** Fonts **/
 PFont FONT_12;
 PFont FONT_14;
@@ -83,38 +85,30 @@ void setup() {
   PREVIOUS_WINDOW.add(null);
   // Basic conf
   surface.setTitle("2014-15 NBA Season Data Visualization");
-  frameRate(60);
+  frameRate(30);
   size(1100, 700, P2D);
   
   this.loadGlobals();
-  SWITCH_WINDOW(new EventWindow(new FileLoader().loadGameEvents(41400101).get(2)));
   
   // Setup current window
   CURRENT_WINDOW.setup();
 }
 
+void draw() {
+  fill(COLOR_BACKGROUND);
+  rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+  CURRENT_WINDOW.draw();
+}
+
 //import java.io.File;
-//import java.io.FileOutputStream;
-//import java.io.FilenameFilter;
-//import java.io.IOException;
-//import java.net.MalformedURLException;
-//import java.net.URL;
-//import java.nio.channels.Channels;
-//import java.nio.channels.ReadableByteChannel;
-
 //void test() {
-
-//  for(int t : PLAYERS.keySet()) {
-//    try {
-//      URL website = new URL("http://stats.nba.com/media/players/230x185/" + t + ".png");
-//      ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-//      FileOutputStream fos = new FileOutputStream("C:\\Processing-301\\workspace\\main\\images\\players\\" + t + ".png");
-//      fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-//    } catch(Exception e) {
-//      println(e);
-//    }
-//  }
-//  println("done");
+//  FileLoader l = new FileLoader();
+//  int gameId = 41400216;
+//  File f = new File(sketchPath("data\\games\\00" + gameId));
+//  for(String e : f.list()) {
+//    println("Game: " + gameId + " Event: " + e);
+//    l.loadGameEventFrames(gameId, Integer.parseInt(e.substring(0, e.length()-4)));
+//  } 
 //}
 
 void loadGlobals() {
@@ -139,12 +133,6 @@ void loadGlobals() {
   // Load games, teams and players
   FileLoader f = new FileLoader();
   f.loadObjects();
-}
-
-void draw() {
-  fill(COLOR_BACKGROUND);
-  rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-  CURRENT_WINDOW.draw();
 }
 
 /** Control Events Handling **/

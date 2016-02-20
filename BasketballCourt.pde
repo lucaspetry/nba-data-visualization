@@ -78,7 +78,7 @@ public class BasketballCourt {
     backboardWidth = 6 * ratio;
     backboardOffX = 4 * ratio;
     
-    playerDiam = 2.5*ratio;
+    playerDiam = 2.8*ratio;
     ballDiam = playerDiam*0.6;
   }
   
