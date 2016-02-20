@@ -17,7 +17,7 @@ public class GamesBox extends Component {
       this.game = game;
       
       if(currentColor)
-        this.background = COLOR_BLUE1;
+        this.background = COLOR_BEIGE1;
       else
         this.background = color(255);
         

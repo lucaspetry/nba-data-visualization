@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class FileLoader {
   
   private String playersFile;
@@ -8,6 +10,74 @@ public class FileLoader {
     this.playersFile = "data/players.csv";
     this.teamsFile = "data/team.csv";
     this.gamesFile = "data2/games.csv";
+  }
+  
+  public boolean isPlayerInEvent(int gameId, int eventNumber, int playerId) {
+    Table tableFrames = loadTable("data/games/00" + gameId + "/" + eventNumber + ".csv");
+    return tableFrames.matchRow("^" + playerId + "$", 2) != null;
+  }
+  
+  public float getDistanceTraveled(int gameId, int eventNumber, int playerId) {
+    Table tableFrames = loadTable("data/games/00" + gameId + "/" + eventNumber + ".csv");
+    
+    float distance = 0;
+    int moment = -1;
+    float x = tableFrames.matchRow("^" + playerId + "$", 2).getFloat(3);
+    float y = tableFrames.matchRow("^" + playerId + "$", 2).getFloat(4);
+    
+    for(TableRow r : tableFrames.matchRows("^" + playerId + "$", 2)) {
+      if(r.getInt(6) == moment+1) {
+        distance += dist(x, y, r.getFloat(3), r.getFloat(4));
+      }
+        
+      moment = r.getInt(6);
+      x = r.getFloat(3);
+      y = r.getFloat(4);
+    }
+    
+    return distance;
+  }
+  
+  public float[][] getAverageSpeed(int gameId, int playerId) {
+    File file = new File(sketchPath("data" + File.separator + "games" + File.separator + "00" + gameId));
+    String[] files = file.list();
+    int[] events = new int[files.length];
+    int q = 0;
+    for(String f : files)
+      events[q++] = Integer.parseInt(f.substring(0, f.length()-4));
+      
+    events = sort(events);
+    float[][] speed = new float[2][files.length/9+1];
+    int idx = 0;
+    int i = 0;
+    
+    for(int event : events) {
+      if(i % 9 == 0) {
+        Table tableFrames = loadTable("data/games/00" + gameId + "/" + event + ".csv");
+        if(tableFrames.matchRow("^" + playerId + "$", 2) != null) {
+          float initClock = tableFrames.getRow(0).getFloat(7);
+          float finalClock = tableFrames.getRow(tableFrames.getRowCount()-1).getFloat(7);
+          float distance = this.getDistanceTraveled(gameId, event, playerId);
+          speed[0][idx] = 720 - tableFrames.getRow(0).getFloat(7) + (tableFrames.getRow(0).getInt(9)-1)*720;
+          speed[1][idx] = distance/(initClock-finalClock);
+        } else {
+          speed[0][idx] = 720 - tableFrames.getRow(0).getFloat(7) + (tableFrames.getRow(0).getInt(9)-1)*720;
+          speed[1][idx] = 0;
+        }
+        idx++;
+      }
+      i++;
+    }
+    return speed;
+  }
+  
+  public float getAverageSpeed(int gameId, int eventNumber, int playerId) {
+    Table tableFrames = loadTable("data/games/00" + gameId + "/" + eventNumber + ".csv");
+    float initClock = tableFrames.getRow(0).getFloat(7);
+    float finalClock = tableFrames.getRow(tableFrames.getRowCount()-1).getFloat(7);
+    float distance = this.getDistanceTraveled(gameId, eventNumber, playerId);
+    
+    return distance/(initClock-finalClock);
   }
   
   public int[] getGamesWinsLosses(int teamId) {
@@ -68,6 +138,7 @@ public class FileLoader {
     float gameClock = -1;
     float shotClock = -1;
     int homeTeam = GAMES.get(gameId).getHomeTeam().getId();
+    int visitorTeam = GAMES.get(gameId).getVisitorTeam().getId();
     PlayerPosition[] homePlayers = new PlayerPosition[5];
     PlayerPosition[] visitorPlayers = new PlayerPosition[5];
         
@@ -90,12 +161,13 @@ public class FileLoader {
           ball[2] = r.getFloat(5);
         } else if(typeRow == homeTeam) {
           homePlayers[homeIdx++] = new PlayerPosition(PLAYERS.get(r.getInt(2)), r.getFloat(3), r.getFloat(4));
-        } else {
+        } else if(typeRow == visitorTeam) {
           visitorPlayers[visitorIdx++] = new PlayerPosition(PLAYERS.get(r.getInt(2)), r.getFloat(3), r.getFloat(4));
         }
       }
       i--;
-      events.add(new GameEventFrame(moment, gameClock, shotClock, ball, homePlayers, visitorPlayers));
+      if(homeIdx > 0 && visitorIdx > 0) // Files aren't consistent!
+        events.add(new GameEventFrame(moment, gameClock, shotClock, ball, homePlayers, visitorPlayers));
     }
     
     return events;

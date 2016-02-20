@@ -39,12 +39,50 @@ public class GameEvent {
     return this.visitorDescription;
   }
   
+  public HashMap<String, Float> getDistanceTraveledHomeTeam() {
+    HashMap<String, Float> distances = new HashMap<String, Float>(5);
+    FileLoader f = new FileLoader();
+    
+    for(Player p : GAMES.get(this.gameId).getHomeTeam().getPlayers()) {
+      if(f.isPlayerInEvent(this.gameId, this.eventNumber, p.getId()))
+        distances.put(p.getLastName() + " (" + p.getJerseyNumber() + ")",
+                    f.getDistanceTraveled(this.gameId, this.eventNumber, p.getId()));
+    }
+    
+    return distances;
+  }
+  
+  public HashMap<String, Float> getDistanceTraveledVisitorTeam() {
+    HashMap<String, Float> distances = new HashMap<String, Float>(5);
+    FileLoader f = new FileLoader();
+    
+    for(Player p : GAMES.get(this.gameId).getVisitorTeam().getPlayers()) {
+      if(f.isPlayerInEvent(this.gameId, this.eventNumber, p.getId()))
+        distances.put(p.getLastName() + " (" + p.getJerseyNumber() + ")",
+                    f.getDistanceTraveled(this.gameId, this.eventNumber, p.getId()));
+    }
+    
+    return distances;
+  }
+  
+  public float getDistanceTraveled(Player player) {
+    return new FileLoader().getDistanceTraveled(this.gameId, this.eventNumber, player.getId());
+  }
+  
+  public float getAverageSpeed(Player player) {
+    return new FileLoader().getAverageSpeed(this.gameId, this.eventNumber, player.getId());
+  }
+  
   public boolean areFramesAvailable() {
     return new FileLoader().gameEventExists(this.gameId, this.eventNumber);
   }
   
   public ArrayList<GameEventFrame> getEventFrames() {
     return new FileLoader().loadGameEventFrames(this.gameId, this.eventNumber);
+  }
+  
+  public Game getGame() {
+    return GAMES.get(this.gameId);
   }
   
 }

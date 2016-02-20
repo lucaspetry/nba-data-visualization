@@ -52,4 +52,8 @@ public class Game {
     return new FileLoader().loadGameEvents(this.id);
   }
   
+  public float[][] getAverageSpeed(Player player) {
+    return new FileLoader().getAverageSpeed(this.id, player.getId());
+  }
+  
 }

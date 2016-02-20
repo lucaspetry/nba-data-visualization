@@ -34,6 +34,10 @@ public class Player {
     return this.lastName + ", " + this.firstName;
   }
   
+  public String getLastName() {
+    return this.lastName;
+  }
+  
   public int getJerseyNumber() {
     return this.jerseyNumber;
   }

@@ -22,7 +22,7 @@ public class PlayByPlayBox extends Component {
         this.rowHeight *= 1.5;
       
       if(currentColor)
-        this.background = COLOR_BLUE1;
+        this.background = COLOR_BEIGE1;
       else
         this.background = color(255);
         

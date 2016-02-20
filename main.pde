@@ -14,7 +14,7 @@ color COLOR_BLUE3 = color(156, 196, 228);
 color COLOR_BLUE4 = color(27, 50, 95);
 
 color COLOR_RED1 = color(204, 42, 65);
-color COLOR_BACKGROUND = COLOR_BLUE3;//color(120, 49, 19);
+color COLOR_BACKGROUND = color(236, 224, 213);
 color COLOR_ORANGE1 = color(242, 108, 79);
 
 color COLOR_GRAY1 = color(81, 81, 81);
@@ -25,6 +25,12 @@ color COLOR_NBA_RED_HIGHLIGHT = color(213, 17, 47);
 color COLOR_NBA_RED_OVER = color(146, 12, 32);
 
 color COLOR_COURT_BLUE = color(63, 128, 182);
+color COLOR_HOME_TEAM = color(255, 0, 0);
+color COLOR_VISITOR_TEAM = color(13, 128, 66);
+
+color COLOR_BEIGE1 = color(236, 224, 213);
+color COLOR_BEIGE2 = color(219, 197, 174);
+color COLOR_BEIGE3 = color(197, 160, 124);
 
 /** Fonts **/
 PFont FONT_12;
@@ -85,7 +91,7 @@ void setup() {
   PREVIOUS_WINDOW.add(null);
   // Basic conf
   surface.setTitle("2014-15 NBA Season Data Visualization");
-  frameRate(30);
+  frameRate(40);
   size(1100, 700, P2D);
   
   this.loadGlobals();

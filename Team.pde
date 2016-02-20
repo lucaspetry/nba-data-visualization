@@ -39,4 +39,14 @@ public class Team {
     return new FileLoader().getGamesWinsLosses(this.id);
   }
   
+  public Player[] getPlayers() {
+    Player[] r = new Player[players.size()];
+    int i = 0;
+    
+    for(int pId : players.keySet())
+      r[i++] = players.get(pId);
+      
+    return r;
+  }
+  
 }
